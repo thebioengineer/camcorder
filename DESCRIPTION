@@ -1,0 +1,21 @@
+Package: camcorder
+Type: Package
+Title: Record Your 'ggplot' History
+Version: 0.0.1
+Authors@R: 
+    c(
+      person(
+        given = "Ellis", 
+        family = "Hughes", 
+        email = "ellishughes@live.com", 
+        role = c("aut", "cre")
+      )
+    )
+Description: Record and generate a gif of your R sessions plots that were created using gglot2.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports: 
+    ggplot2,
+    gifski
