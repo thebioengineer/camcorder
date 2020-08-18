@@ -1,16 +1,41 @@
-library(magick)
 
-square <- image_read("https://github.com/gkaramanis/tidytuesday/blob/master/2020-week32/plots/european-energy.png") # square
+#' Resize images to a square
+#'
+#' Resize an image to equal height and width, maintaining the aspect ratio by filling the outside
+#' with a defined color
+#'
+#' @param image path to image
+#' @param output path to save resized image
+#' @param max_size set maximum height/width of the image in pixels
+#' @param background color to set the background. A valid color string such as "navyblue" or
+#' "#000080". Use "none" for transparancy.
+#' @return Nothing. Used to resize images on the file system.
+#'
+#' @importFrom magick image_read image_info image_resize image_extent image_write
+#' @importFrom tools file_path_sans_ext
+#'
+#' @noRd
+#'
+resize_image <- function(image, path, max_size = 600, background = "black") {
 
-tall <- image_read("https://github.com/gkaramanis/tidytuesday/blob/master/2020-week29/plots/astronauts.png") # tall
+  if (missing(path)) {
+    base_image_name <- file_path_sans_ext(basename(image))
+    image_ext <- tools::file_ext(image)
+    path <- file.path(dirname(image),
+                      paste0(
+                        paste(
+                          base_image_name,
+                          "resize",
+                          paste0(max_size, "x", max_size),
+                          sep = "_"
+                        ),
+                        ".",
+                        image_ext
+                      ))
+  }
 
-wide <- image_read("https://github.com/gkaramanis/tidytuesday/blob/master/2020-week28/plots/coffee-ratings.png") # wide
+  image <- image_read(image)
 
-image_info(square)
-image_info(wide)
-image_info(tall)
-
-resize <- function(image, max_size = 1024, background = "black") {
   image_width <- image_info(image)$width
   image_height <- image_info(image)$height
 
@@ -23,10 +48,11 @@ resize <- function(image, max_size = 1024, background = "black") {
     resized_image <- image_resize(image, paste0("x", max_size))
   }
 
-  image_extent(resized_image, paste0(max_size, "x", max_size), color = background)
+  resized_image <- image_extent(resized_image, paste0(max_size, "x", max_size), color = background)
+
+  image_write(resized_image, path = path)
+
 }
 
-resize(tall) # with defaults
-resize(wide, max_size = 800, background = "pink")
-resize(wide, 2048, "green")
-resize(square, 1200)
+
+

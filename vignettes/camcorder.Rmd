@@ -1,22 +1,25 @@
+---
+title: "camcorder"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{camcorder}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-# camcorder 
-<img src='man/figures/logo.png' align="right" height="120" />
-
-<!-- badges: start -->
-[![R build status](https://github.com/thebioengineer/camcorder/workflows/R-CMD-check/badge.svg)](https://github.com/thebioengineer/camcorder/actions)
-<!-- badges: end -->
-
-
-The goal for {camcorder} is to track and record the ggplots that are created across one or multiple sessions with the eventual goal of creating a gif showing all the plots created sequentially.
-
-## Installation
-
-Currently {camcorder} is only available on github, and can be installed using the following command.
-
-``` r
-# install.packages("camcorder")
-remotes::install_github("thebioengineer/camcorder")
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE # don't need vignettes to execute
+)
 ```
+
+
+
+## Purpose
+
+The use case for {camcorder} is to track and record the ggplots that are created across one or multiple sessions with the eventual goal of creating a gif showing all the plots created sequentially.
 
 ## Example
 
@@ -154,4 +157,4 @@ gg_playback(
 
 Once rendering is complete, a gif is opened in your viewer.
 
-![](vignettes/vignette_gif.gif)
+![](vignette_gif.gif)

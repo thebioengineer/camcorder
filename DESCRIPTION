@@ -9,6 +9,18 @@ Authors@R:
         family = "Hughes", 
         email = "ellishughes@live.com", 
         role = c("aut", "cre")
+      ),
+      person(
+        given = "Georgios", 
+        family = "Karamanis", 
+        email = "georgios@karaman.is", 
+        role = c("ctb")
+      ),
+      person(
+        given = "Cédric", 
+        family = "Scherer", 
+        email = "info@data-vizard.com", 
+        role = c("ctb")
       )
     )
 Description: Record and generate a gif of your R sessions plots that were created using gglot2.
@@ -18,4 +30,10 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
     ggplot2,
-    gifski
+    gifski,
+    tools,
+    magick
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
