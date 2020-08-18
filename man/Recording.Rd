@@ -22,9 +22,11 @@ gg_playback(
   first_image_duration = 16,
   last_image_duration = 20,
   frame_duration = 0.25,
-  size = 600,
+  loop = TRUE,
+  image_resize = 600,
   background = "black",
-  ...,
+  width = NULL,
+  height = NULL,
   progress = interactive(),
   playback = TRUE,
   stoprecording = TRUE
@@ -65,12 +67,12 @@ specifying dimensions in pixels.}
 
 \item{frame_duration}{n seconds each plot should be shown}
 
-\item{size}{size to rescale images to in pixels}
+\item{loop}{should the gif play forever (FALSE to only play once)}
+
+\item{image_resize}{size to rescale images to in pixels}
 
 \item{background}{color to set the background. A valid color string such as "navyblue" or
 "#000080". Use "none" for transparancy.}
-
-\item{...}{arguments passed to \code{\link[gifski]{gifski}}}
 
 \item{progress}{show progress bar}
 

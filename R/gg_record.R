@@ -170,13 +170,14 @@ gg_playback <-
     }
 
     ## make gif via gifski
-    gifski::gifski(records,
-                   gif_file = recording,
-                   delay = frame_duration,
-                   ...,
-                   width = ifelse(is.null(width),image_resize,width)
-                   height = ifelse(is.null(height),image_resize,width),
-                   progress = progress)
+    gifski(
+      png_files = records,
+      gif_file = recording,
+      delay = frame_duration,
+      width = ifelse(is.null(width), image_resize, width),
+      height = ifelse(is.null(height), image_resize, width),
+      progress = progress
+    )
 
     viewer <- getOption("viewer", utils::browseURL)
 
