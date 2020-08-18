@@ -116,10 +116,9 @@ gg_record <- function(dir = NULL,
 #' @param first_image_duration n units of frame_duration to show the last image for
 #' @param last_image_duration n units of frame_duration to show the last image for
 #' @param frame_duration n seconds each plot should be shown
-#' @param size size to rescale images to in pixels
+#' @param image_resize size to rescale images to in pixels
 #' @param background color to set the background. A valid color string such as "navyblue" or
 #' "#000080". Use "none" for transparancy.
-#' @param ... arguments passed to \code{\link[gifski]{gifski}}
 #' @param playback Boolean, should the recording start playing after it is
 #' turned into a gif? defaults to TRUE
 #' @param stoprecording Boolean, should the plots stop being recorded?
@@ -135,9 +134,11 @@ gg_playback <-
            first_image_duration = 16,
            last_image_duration = 20,
            frame_duration = .25,
-           size = 600,
+           loop = TRUE,
+           image_resize = 600,
            background = "black",
-           ...,
+           width = NULL,
+           height = NULL,
            progress = interactive(),
            playback = TRUE,
            stoprecording = TRUE) {
@@ -151,7 +152,7 @@ gg_playback <-
     stopifnot(last_image_duration > 0)
     stopifnot(first_image_duration > 0)
 
-    records <- scale_film(film = records, size = size, background = background)
+    records <- scale_film(film = records, size = image_resize, background = background)
 
     records <- c(
       rep(records[1], times = first_image_duration),
@@ -173,6 +174,8 @@ gg_playback <-
                    gif_file = recording,
                    delay = frame_duration,
                    ...,
+                   width = ifelse(is.null(width),image_resize,width)
+                   height = ifelse(is.null(height),image_resize,width),
                    progress = progress)
 
     viewer <- getOption("viewer", utils::browseURL)
