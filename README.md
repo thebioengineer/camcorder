@@ -23,7 +23,6 @@ The idea of tracking your plots as part of your development process and generati
 <table>
 <tr>
 <td>
-<div>
 <p> Cédric Scherer, TidyTuesday 2020, week 28 </p>
 <img src = "inst/gif_samples/cscherer_coffee_ratings.gif" height = "350">
 </td>
@@ -54,7 +53,7 @@ gg_record(
 )
 ```
 
-Once the recorder is initialized, the go about making any plots you see fit, and it will automagically record for you.
+Once the recorder is initialized, any ggplot that is made and printed will be automagically recorded.
 
 ```{r plots-plots-plots, results = "hide"}
 
@@ -105,8 +104,7 @@ ggplot(mtcars) +
 
 ```
 
-Say you realize partly through, that you want to save your plots in a wider format.
-Through the `gg_resize_film()` function, any of the size settings can be reset going forward!
+If at any point, that you want to save your plots in a different format than what the recorder was initialized with this can be done through the `gg_resize_film()` function. This will set the size and dpi of all plots going forward.
 
 ```{r resize}
 
