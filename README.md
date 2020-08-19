@@ -1,6 +1,5 @@
 
-# camcorder 
-<img src='man/figures/logo.png' align="right" height="120" />
+# camcorder <img src='man/figures/logo.png' align="right" height="200" />
 
 <!-- badges: start -->
 [![R build status](https://github.com/thebioengineer/camcorder/workflows/R-CMD-check/badge.svg)](https://github.com/thebioengineer/camcorder/actions)
@@ -17,8 +16,26 @@ Currently {camcorder} is only available on github, and can be installed using th
 # install.packages("camcorder")
 remotes::install_github("thebioengineer/camcorder")
 ```
+## End Product
 
-## Example
+The idea of tracking your plots as part of your development process and generating a gif/movie was popularized by two contributors to this project: Georgios Karamanis and Cédric Scherer. They have wowed the R community weekly with their "how its made" videos. Below are a few examples of the goal end products.
+
+<table>
+<tr>
+<td>
+<div>
+<p> Cédric Scherer, TidyTuesday 2020, week 28 </p>
+<img src = "inst/gif_samples/cscherer_coffee_ratings.gif" height = "350">
+</td>
+<td>
+<p> Georgios Karamanis, TidyTuesday 2020, week 15 </p>
+<img src = "inst/gif_samples/gkaramanis_tour_de_france.gif" height = "350">
+</td>
+</tr>
+</table>
+
+
+## How To
 
 To get started, load {camcorder} and initialize recording using the `gg_record()` function.
 This function has several options, such as where to save the recordings, device to use to save the recordings, and the height/width of the image to create. By default it will save to a temporary directory so recordings will go away once the rsession is closed.
