@@ -1,8 +1,7 @@
 #' @title Record and generate plot histories
 #'
-#' @description Record your past plots and generate a gif of the plots you've
-#'    made in this r session. Common technique used by TidyTuesday-ers to show
-#'    where they started vs their final plots
+#' @description Record plots created over time and generate a gif of the plots
+#'    made in the R session.
 #'
 #' @rdname Recording
 #'

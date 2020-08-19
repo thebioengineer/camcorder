@@ -40,7 +40,7 @@ gg_record(
 )
 ```
 
-Once the recorder is initialized, the go about making any plots you see fit, and it will automagically record for you.
+Once the recorder is initialized, any ggplot that is made and printed will be automagically recorded.
 
 ```{r plots-plots-plots, results = "hide"}
 
@@ -91,8 +91,7 @@ ggplot(mtcars) +
 
 ```
 
-Say you realize partly through, that you want to save your plots in a wider format.
-Through the `gg_resize_film()` function, any of the size settings can be reset going forward!
+If at any point, that you want to save your plots in a different format than what the recorder was initialized, or just set them for the first time, with this can be done through the `gg_resize_film()` function. This will set the size and dpi of all plots going forward.
 
 ```{r resize}
 
@@ -142,6 +141,7 @@ The user can define:
   - where the final gif gets saved by setting the `name` argument,
   - duration of the first and last images with `first_image_duration` or `last_image_duration`
   - delay between frames in seconds with `frame_duration`
+  - size of images and gif
 
 
 ```{r}
@@ -151,10 +151,13 @@ gg_playback(
   first_image_duration = 8,
   last_image_duration = 12,
   frame_duration = .25
+  image_size = 600,
+  width = 800,
+  height = 600
 )
 
 ```
 
-Once rendering is complete, a gif is opened in your viewer.
+Once rendering is complete, a gif is saved and then opened in your viewer.
 
 ![](vignette_gif.gif)

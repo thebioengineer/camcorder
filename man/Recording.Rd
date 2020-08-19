@@ -90,9 +90,8 @@ Returns nothing. Used to generate the gif.
 Returns the last plot generated, resized to new dimentions
 }
 \description{
-Record your past plots and generate a gif of the plots you've
-   made in this r session. Common technique used by TidyTuesday-ers to show
-   where they started vs their final plots
+Record plots created over time and generate a gif of the plots
+   made in the R session.
 
 resize the film for recording, reprints and saves last plot
 }
