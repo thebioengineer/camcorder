@@ -150,8 +150,8 @@ gg_playback(
   name = file.path(tempdir(),"recording","vignette_gif.gif"),
   first_image_duration = 8,
   last_image_duration = 12,
-  frame_duration = .25
-  image_size = 600,
+  frame_duration = .25,
+  image_resize = 600,
   width = 800,
   height = 600
 )

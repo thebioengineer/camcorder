@@ -45,6 +45,9 @@ gg_record <- function(dir = NULL,
     is_temp_dir <- FALSE
   }
 
+  device <- match.arg(device)
+  units <- match.arg(units)
+
   if (!dir.exists(dir)) {
     dir.create(dir, recursive = TRUE)
   } else{
@@ -55,8 +58,7 @@ gg_record <- function(dir = NULL,
     }
   }
 
-  device <- match.arg(device)
-  units <- match.arg(units)
+
 
   GG_RECORDING_ENV$recording_dir <- dir
   GG_RECORDING_ENV$device        <- device
