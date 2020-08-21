@@ -19,7 +19,7 @@ Authors@R:
       person(
         given = "Cédric", 
         family = "Scherer", 
-        email = "info@data-vizard.com", 
+        email = "cedricphilippscherer@gmail.com", 
         role = c("ctb")
       )
     )
@@ -32,7 +32,9 @@ Imports:
     ggplot2,
     gifski,
     tools,
-    magick
+    magick,
+    pdftools,
+    rsvg
 Suggests: 
     knitr,
     rmarkdown
