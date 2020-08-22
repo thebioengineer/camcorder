@@ -13,13 +13,15 @@
 #'
 #' @importFrom magick image_read image_info image_resize image_extent image_write
 #' @importFrom tools file_path_sans_ext
+#' @import pdftools
+#' @import rsvg
 #'
 #' @noRd
 #'
 resize_image <- function(image, path, max_size = 600, background = "black") {
 
   if (missing(path)) {
-    base_image_name <- file_path_sans_ext(basename(image))
+    base_image_name <- tools::file_path_sans_ext(basename(image))
     image_ext <- tools::file_ext(image)
     path <- file.path(dirname(image),
                       paste0(
@@ -34,23 +36,30 @@ resize_image <- function(image, path, max_size = 600, background = "black") {
                       ))
   }
 
-  image <- image_read(image)
+  image_ext <- tools::file_ext(image)
 
-  image_width <- image_info(image)$width
-  image_height <- image_info(image)$height
+  if (image_ext %in% c("pdf", "svg")) {
+    if (image_ext == "pdf") { image <- magick::image_read_pdf(image) }
+    if (image_ext == "svg") { image <- magick::image_read_svg(image) }
+  } else  {
+    image <- magick::image_read(image)
+  }
+
+  image_width <- magick::image_info(image)$width
+  image_height <- magick::image_info(image)$height
 
   # image_resize should give better results(?) but slower than image_scale
   # http://www.imagemagick.org/Usage/resize/
 
   if (image_width >= image_height) {
-    resized_image <- image_resize(image, max_size)
+    resized_image <- magick::image_resize(image, max_size)
   } else {
-    resized_image <- image_resize(image, paste0("x", max_size))
+    resized_image <- magick::image_resize(image, paste0("x", max_size))
   }
 
-  resized_image <- image_extent(resized_image, paste0(max_size, "x", max_size), color = background)
+  resized_image <- magick::image_extent(resized_image, paste0(max_size, "x", max_size), color = background)
 
-  image_write(resized_image, path = path)
+  magick::image_write(resized_image, path = path)
 
 }
 
