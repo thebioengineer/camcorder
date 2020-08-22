@@ -23,11 +23,11 @@ The idea of tracking your plots as part of your development process and generati
 <table>
 <tr>
 <td>
-<p> Cédric Scherer, TidyTuesday 2020, week 28 </p>
+<p> Cédric Scherer, TidyTuesday 2020/28 </p>
 <img src = "inst/gif_samples/cscherer_coffee_ratings.gif" height = "350">
 </td>
 <td>
-<p> Georgios Karamanis, TidyTuesday 2020, week 15 </p>
+<p> Georgios Karamanis, TidyTuesday 2020/15 </p>
 <img src = "inst/gif_samples/gkaramanis_tour_de_france.gif" height = "350">
 </td>
 </tr>
