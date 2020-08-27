@@ -8,7 +8,7 @@
 \usage{
 gg_record(
   dir = NULL,
-  device = c("png", "jpeg", "bmp", "tiff", "emf", "svg", "eps"),
+  device = c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps", "bmp"),
   scale = 1,
   width = NA,
   height = NA,
@@ -87,7 +87,7 @@ Used initialize recording, nothing returned
 
 Returns nothing. Used to generate the gif.
 
-Returns the last plot generated, resized to new dimentions
+Returns the last plot generated, resized to new dimensions
 }
 \description{
 Record plots created over time and generate a gif of the plots

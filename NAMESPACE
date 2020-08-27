@@ -3,6 +3,8 @@
 export(gg_playback)
 export(gg_record)
 export(gg_resize_film)
+import(pdftools)
+import(rsvg)
 importFrom(ggplot2,ggsave)
 importFrom(gifski,gifski)
 importFrom(magick,image_extent)
