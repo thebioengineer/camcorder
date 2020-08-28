@@ -28,7 +28,7 @@
 #' @export
 
 gg_record <- function(dir = NULL,
-                      device = c("png", "jpeg", "bmp", "tiff", "emf", "svg", "eps"),
+                      device = c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps", "bmp"),
                       scale = 1,
                       width = NA,
                       height = NA,
@@ -208,7 +208,7 @@ gg_playback <-
 #' @inheritParams ggplot2::ggsave
 #' @export
 #'
-#' @return Returns the last plot generated, resized to new dimentions
+#' @return Returns the last plot generated, resized to new dimensions
 #'
 gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA){
 
