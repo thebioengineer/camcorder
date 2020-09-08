@@ -96,7 +96,8 @@ gg_record <- function(dir = NULL,
       })
 
       # View plot
-      ggplot2_print(x, newpage = newpage, vp = vp, ...)
+      # ggplot2_print(x, newpage = newpage, vp = vp, ...)
+      preview_film()
 
       GG_RECORDING_ENV$last_plot <- x
 
