@@ -69,20 +69,13 @@ gg_record <- function(dir = NULL,
   GG_RECORDING_ENV$scale        <- scale
   GG_RECORDING_ENV$limitsize    <- limitsize
 
-  registerS3method(
-    genname = "print",
-    class = "ggplot",
-    method = "record_ggplot",
-    envir = getNamespace("camcorder")
-  )
+  register_camcorder_shims()
 
-  registerS3method(
-    genname = "print",
-    class = "patchwork",
-    method = "record_patchwork",
-    envir = getNamespace("camcorder")
-  )
+  if( !"package:ggplot2" %in% search()){
+    warning("`ggplot2` not loaded!")
+  }
 
+  invisible()
 }
 
 
@@ -163,18 +156,7 @@ gg_playback <-
 
     ## revert ggplot printing to standard printing
     if (stoprecording) {
-      registerS3method(
-        genname = "print",
-        class = "ggplot",
-        method = "print.ggplot",
-        envir = getNamespace("ggplot2")
-      )
-      registerS3method(
-        genname = "print",
-        class = "patchwork",
-        method = "print.patchwork",
-        envir = getNamespace("patchwork")
-      )
+      detach_camcorder_shims()
     }
 
     invisible()
