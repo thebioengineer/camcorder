@@ -259,7 +259,7 @@ film_cyclotron <- function(IMAGE,filename = tempfile(fileext = ".html")){
     "<html>",
     "<head>",
     "<script>",
-    "window.onresize = function(){ window.setTimeout(function(){window.location.reload();}, 200)}",
+    "window.onresize = function(){ window.setTimeout(function(){window.location.reload();}, 100)}",
     "</script>",
     "</head>",
     "<body style='height:100%;width:100%;margin:auto;'>",

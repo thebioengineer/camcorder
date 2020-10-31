@@ -58,8 +58,6 @@ gg_record <- function(dir = NULL,
     }
   }
 
-
-
   GG_RECORDING_ENV$recording_dir <- dir
   GG_RECORDING_ENV$device        <- device
   GG_RECORDING_ENV$is_temp_dir   <- is_temp_dir
@@ -68,47 +66,16 @@ gg_record <- function(dir = NULL,
   GG_RECORDING_ENV$image_height <- height
   GG_RECORDING_ENV$image_units  <- units
   GG_RECORDING_ENV$image_dpi    <- dpi
+  GG_RECORDING_ENV$scale        <- scale
+  GG_RECORDING_ENV$limitsize    <- limitsize
 
-  ggplot2_print <- get("print.ggplot", envir = asNamespace("ggplot2"), inherits = FALSE)
+  register_camcorder_shims()
 
-  ## create shim function
+  if( !"package:ggplot2" %in% search()){
+    warning("`ggplot2` not loaded!")
+  }
 
-  GG_RECORDING_ENV$print.view_and_save_ggplot <-
-    function(x,
-             newpage = is.null(vp),
-             vp = NULL,
-             ...) {
-
-      plot_file <-
-        file.path(dir, paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"), ".", device))
-
-      suppressMessages({
-        ggplot2::ggsave(
-          filename = plot_file,
-          plot = x,
-          scale = scale,
-          width = GG_RECORDING_ENV$image_width,
-          height = GG_RECORDING_ENV$image_height,
-          units = GG_RECORDING_ENV$image_units,
-          dpi = GG_RECORDING_ENV$image_dpi,
-          limitsize = limitsize
-        )
-      })
-
-      # View plot
-      # ggplot2_print(x, newpage = newpage, vp = vp, ...)
-      preview_film()
-
-      GG_RECORDING_ENV$last_plot <- x
-
-    }
-
-  registerS3method(
-    genname = "print",
-    class = "ggplot",
-    method = "print.view_and_save_ggplot",
-    envir = GG_RECORDING_ENV
-  )
+  invisible()
 }
 
 
@@ -195,13 +162,7 @@ gg_playback <-
     }
     ## revert ggplot printing to standard printing
     if (stoprecording) {
-      registerS3method(
-        genname = "print",
-        class = "ggplot",
-        method = "print.ggplot",
-        envir = getNamespace("ggplot2")
-      )
-
+      detach_camcorder_shims()
     }
 
     invisible()
