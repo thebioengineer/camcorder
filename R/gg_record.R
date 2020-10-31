@@ -144,49 +144,55 @@ gg_playback <-
            progress = interactive(),
            playback = TRUE,
            stoprecording = TRUE) {
-
     records <- list.files(
       path    = GG_RECORDING_ENV$recording_dir,
       pattern = paste0("*.", GG_RECORDING_ENV$device, "$"),
       full.names = TRUE
     )
 
-    stopifnot(last_image_duration > 0)
-    stopifnot(first_image_duration > 0)
+    if (length(records) == 0) {
+      warning("No images recorded to playback.")
+    } else{
+      stopifnot(last_image_duration > 0)
+      stopifnot(first_image_duration > 0)
 
-    records <- scale_film(film = records, size = image_resize, background = background)
+      records <-
+        scale_film(film = records,
+                   size = image_resize,
+                   background = background)
 
-    records <- c(
-      rep(records[1], times = first_image_duration),
-      records[-c(1,length(records))],
-      rep(records[length(records)], times = last_image_duration)
+      records <- c(
+        rep(records[1], times = first_image_duration),
+        records[-c(1, length(records))],
+        rep(records[length(records)], times = last_image_duration)
       )
 
-    if (is.null(name)) {
-      recording <- paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".gif")
-      if (!GG_RECORDING_ENV$is_temp_dir) {
-        recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
+      if (is.null(name)) {
+        recording <- paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".gif")
+        if (!GG_RECORDING_ENV$is_temp_dir) {
+          recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
+        }
+      } else{
+        recording <- name
       }
-    } else{
-      recording <- name
+
+      ## make gif via gifski
+      gifski(
+        png_files = records,
+        gif_file = recording,
+        delay = frame_duration,
+        width = ifelse(is.null(width), image_resize, width),
+        height = ifelse(is.null(height), image_resize, width),
+        progress = progress
+      )
+
+      viewer <- getOption("viewer", utils::browseURL)
+
+      if (is.function(viewer) &&
+          length(recording) > 0 && playback && interactive()) {
+        viewer(recording)
+      }
     }
-
-    ## make gif via gifski
-    gifski(
-      png_files = records,
-      gif_file = recording,
-      delay = frame_duration,
-      width = ifelse(is.null(width), image_resize, width),
-      height = ifelse(is.null(height), image_resize, width),
-      progress = progress
-    )
-
-    viewer <- getOption("viewer", utils::browseURL)
-
-    if (is.function(viewer) && length(recording)>0 && playback && interactive()) {
-      viewer(recording)
-    }
-
     ## revert ggplot printing to standard printing
     if (stoprecording) {
       registerS3method(
