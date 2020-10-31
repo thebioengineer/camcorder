@@ -16,7 +16,7 @@ preview_film <- function(){
 
   } else{
     image_viewer_html <-
-      file.path(GG_RECORDING_ENV$recording_dir, "preview.html")
+      file.path(tempdir(), "preview.html")
 
     film_cyclotron(IMAGE = records[length(records)],
                    filename = image_viewer_html)
