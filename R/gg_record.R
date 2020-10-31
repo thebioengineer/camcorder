@@ -197,4 +197,18 @@ gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA){
   invisible()
 }
 
+#' @describeIn Recording
+#'
+#' @description Stop recording images with {camcorder}.
+#'
+#' @inheritParams ggplot2::ggsave
+#' @export
+#'
+#' @return Returns nothing. used for side effect.
+gg_stop_recording <- function(){
+  detach_camcorder_shims()
+}
+
+
 GG_RECORDING_ENV <- new.env()
+
