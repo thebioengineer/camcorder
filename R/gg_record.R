@@ -28,7 +28,7 @@
 #' @export
 
 gg_record <- function(dir = NULL,
-                      device = c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps", "bmp"),
+                      device = c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps"),
                       scale = 1,
                       width = NA,
                       height = NA,
