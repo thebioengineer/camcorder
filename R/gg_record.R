@@ -45,6 +45,7 @@ gg_record <- function(dir = NULL,
     is_temp_dir <- FALSE
   }
 
+  device <- tolower(device)
   device <- match.arg(device)
   units <- match.arg(units)
 
@@ -111,6 +112,7 @@ gg_playback <-
            progress = interactive(),
            playback = TRUE,
            stoprecording = TRUE) {
+
     records <- list.files(
       path    = GG_RECORDING_ENV$recording_dir,
       pattern = paste0("*.", GG_RECORDING_ENV$device, "$"),
@@ -201,7 +203,6 @@ gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA){
 #'
 #' @description Stop recording images with {camcorder}.
 #'
-#' @inheritParams ggplot2::ggsave
 #' @export
 #'
 #' @return Returns nothing. used for side effect.

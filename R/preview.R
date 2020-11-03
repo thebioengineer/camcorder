@@ -1,3 +1,5 @@
+#' @description preview generated images in a an html page and open viewer
+#' @noRd
 preview_film <- function(){
 
   records <- list.files(
@@ -35,13 +37,28 @@ preview_film <- function(){
 
 #' @title Generate HTML
 #' @importFrom tools file_ext
+#' @importFrom jsonlite base64_enc
 #' @noRd
 #'
 film_cyclotron <- function(IMAGE,filename = tempfile(fileext = ".html")){
 
+  image_path <- file.path(GG_RECORDING_ENV$recording_dir, IMAGE)
+  image_ext <- file_ext(IMAGE)
+
+  if(tolower(image_ext) %in% c("tiff","emf","eps","ps")){
+    temp_image <- tempfile(fileext = ".png")
+    image <- magick::image_read(image_path)
+    converted_image <- magick::image_convert(image,format = "png")
+    magick::image_write(converted_image, path = temp_image)
+    image_path <- temp_image
+    image_ext <- "png"
+  }
+
+  b64 <-  paste0("data:image/",image_ext,";base64," , base64_enc(readBin(image_path, "raw", file.info(image_path)[1, "size"])))
+
   viewer_html <- c(
     "<div style='height:100%;width:100%;'>",
-    paste0("<img class='zoom' src=\"",IMAGE,"\" style = \"max-width:100%;max-height:100%;width:auto;height;auto;display: block;margin-left: auto;margin-right: auto; vertical-align:middle;\"/>"),
+    paste0("<img class='zoom' src=\"",b64,"\" style = \"max-width:100%;max-height:100%;width:auto;height;auto;display: block;margin-left: auto;margin-right: auto; vertical-align:middle;\"/>"),
     "</div>",
     "<script>",
     "
