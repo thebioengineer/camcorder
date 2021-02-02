@@ -45,6 +45,7 @@ gg_record <- function(dir = NULL,
     is_temp_dir <- FALSE
   }
 
+  device <- tolower(device)
   device <- match.arg(device)
   units <- match.arg(units)
 
@@ -58,8 +59,6 @@ gg_record <- function(dir = NULL,
     }
   }
 
-
-
   GG_RECORDING_ENV$recording_dir <- dir
   GG_RECORDING_ENV$device        <- device
   GG_RECORDING_ENV$is_temp_dir   <- is_temp_dir
@@ -68,46 +67,16 @@ gg_record <- function(dir = NULL,
   GG_RECORDING_ENV$image_height <- height
   GG_RECORDING_ENV$image_units  <- units
   GG_RECORDING_ENV$image_dpi    <- dpi
+  GG_RECORDING_ENV$scale        <- scale
+  GG_RECORDING_ENV$limitsize    <- limitsize
 
-  ggplot2_print <- get("print.ggplot", envir = asNamespace("ggplot2"), inherits = FALSE)
+  register_camcorder_shims()
 
-  ## create shim function
+  if( !"package:ggplot2" %in% search()){
+    warning("`ggplot2` not loaded!")
+  }
 
-  GG_RECORDING_ENV$print.view_and_save_ggplot <-
-    function(x,
-             newpage = is.null(vp),
-             vp = NULL,
-             ...) {
-
-      plot_file <-
-        file.path(dir, paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"), ".", device))
-
-      suppressMessages({
-        ggplot2::ggsave(
-          filename = plot_file,
-          plot = x,
-          scale = scale,
-          width = GG_RECORDING_ENV$image_width,
-          height = GG_RECORDING_ENV$image_height,
-          units = GG_RECORDING_ENV$image_units,
-          dpi = GG_RECORDING_ENV$image_dpi,
-          limitsize = limitsize
-        )
-      })
-
-      # View plot
-      ggplot2_print(x, newpage = newpage, vp = vp, ...)
-
-      GG_RECORDING_ENV$last_plot <- x
-
-    }
-
-  registerS3method(
-    genname = "print",
-    class = "ggplot",
-    method = "print.view_and_save_ggplot",
-    envir = GG_RECORDING_ENV
-  )
+  invisible()
 }
 
 
@@ -150,51 +119,52 @@ gg_playback <-
       full.names = TRUE
     )
 
-    stopifnot(last_image_duration > 0)
-    stopifnot(first_image_duration > 0)
+    if (length(records) == 0) {
+      warning("No images recorded to playback.")
+    } else{
+      stopifnot(last_image_duration > 0)
+      stopifnot(first_image_duration > 0)
 
-    records <- scale_film(film = records, size = image_resize, background = background)
+      records <-
+        scale_film(film = records,
+                   size = image_resize,
+                   background = background)
 
-    records <- c(
-      rep(records[1], times = first_image_duration),
-      records[-c(1,length(records))],
-      rep(records[length(records)], times = last_image_duration)
+      records <- c(
+        rep(records[1], times = first_image_duration),
+        records[-c(1, length(records))],
+        rep(records[length(records)], times = last_image_duration)
       )
 
-    if (is.null(name)) {
-      recording <- paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".gif")
-      if (!GG_RECORDING_ENV$is_temp_dir) {
-        recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
+      if (is.null(name)) {
+        recording <- paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".gif")
+        if (!GG_RECORDING_ENV$is_temp_dir) {
+          recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
+        }
+      } else{
+        recording <- name
       }
-    } else{
-      recording <- name
+
+      ## make gif via gifski
+      gifski(
+        png_files = records,
+        gif_file = recording,
+        delay = frame_duration,
+        width = ifelse(is.null(width), image_resize, width),
+        height = ifelse(is.null(height), image_resize, width),
+        progress = progress
+      )
+
+      viewer <- getOption("viewer", utils::browseURL)
+
+      if (is.function(viewer) &&
+          length(recording) > 0 && playback && interactive()) {
+        viewer(recording)
+      }
     }
-
-    ## make gif via gifski
-    gifski(
-      png_files = records,
-      gif_file = recording,
-      delay = frame_duration,
-      width = ifelse(is.null(width), image_resize, width),
-      height = ifelse(is.null(height), image_resize, width),
-      progress = progress
-    )
-
-    viewer <- getOption("viewer", utils::browseURL)
-
-    if (is.function(viewer) && length(recording)>0 && playback && interactive()) {
-      viewer(recording)
-    }
-
     ## revert ggplot printing to standard printing
     if (stoprecording) {
-      registerS3method(
-        genname = "print",
-        class = "ggplot",
-        method = "print.ggplot",
-        envir = getNamespace("ggplot2")
-      )
-
+      detach_camcorder_shims()
     }
 
     invisible()
@@ -229,4 +199,17 @@ gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA){
   invisible()
 }
 
+#' @describeIn Recording
+#'
+#' @description Stop recording images with {camcorder}.
+#'
+#' @export
+#'
+#' @return Returns nothing. used for side effect.
+gg_stop_recording <- function(){
+  detach_camcorder_shims()
+}
+
+
 GG_RECORDING_ENV <- new.env()
+

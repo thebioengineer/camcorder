@@ -29,6 +29,7 @@ This function has several options, such as where to save the recordings, device 
 ```{r setup}
 library(ggplot2)
 library(camcorder)
+library(patchwork)
 
 gg_record(
   dir = file.path(tempdir(),"recording"), # where to save the recording

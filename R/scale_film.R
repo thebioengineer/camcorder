@@ -15,11 +15,11 @@ scale_film <- function(film, cassette, size = 600, background = "black") {
       dir.create(cassette)
     }
   }
-
+  image_ext <- file_ext(film[1])
   ## what resized film already exists, as to not do-over work
   existing_resized_film <-
     list.files(cassette,
-               pattern = paste0("_", size, "x", size, "."),
+               pattern = paste0("_", size, "x", size, ".",ifelse(image_ext == "pdf","pdf","png")),
                full.names = TRUE)
 
   existing_resized_film <-
@@ -27,7 +27,9 @@ scale_film <- function(film, cassette, size = 600, background = "black") {
          "",
          existing_resized_film)
 
-  film_to_resize <- setdiff(film, existing_resized_film)
+  film_to_resize <- film[!basename(file_path_sans_ext(film)) %in% basename(file_path_sans_ext(existing_resized_film))]
+
+
 
 
   q_lapply(film_to_resize, function(film_path) {
@@ -43,7 +45,7 @@ scale_film <- function(film, cassette, size = 600, background = "black") {
                           sep = "_"
                         ),
                         ".",
-                        image_ext
+                        ifelse(image_ext == "pdf","pdf","png")
                       ))
 
     resize_image(film_path,
