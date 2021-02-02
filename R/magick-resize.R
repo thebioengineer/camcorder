@@ -12,7 +12,7 @@
 #' @return Nothing. Used to resize images on the file system.
 #'
 #' @importFrom magick image_read image_info image_resize image_extent image_write
-#' @importFrom tools file_path_sans_ext
+#' @importFrom tools file_path_sans_ext file_ext
 #' @import pdftools
 #' @import rsvg
 #'
@@ -32,11 +32,12 @@ resize_image <- function(image, path, max_size = 600, background = "black") {
                           sep = "_"
                         ),
                         ".",
-                        image_ext
+                        "png"
                       ))
   }
 
   image_ext <- tools::file_ext(image)
+  image_out_ext <- tools::file_ext(path)
 
   if (image_ext %in% c("pdf", "svg")) {
     if (image_ext == "pdf") { image <- magick::image_read_pdf(image) }
@@ -58,6 +59,10 @@ resize_image <- function(image, path, max_size = 600, background = "black") {
   }
 
   resized_image <- magick::image_extent(resized_image, paste0(max_size, "x", max_size), color = background)
+
+  if(image_ext != image_out_ext){
+    resized_image <- magick::image_convert(resized_image,format = image_out_ext)
+  }
 
   magick::image_write(resized_image, path = path)
 
