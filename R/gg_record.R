@@ -70,6 +70,8 @@ gg_record <- function(dir = NULL,
   GG_RECORDING_ENV$scale        <- scale
   GG_RECORDING_ENV$limitsize    <- limitsize
 
+  GG_RECORDING_ENV$shims_registered <- FALSE
+
   register_camcorder_shims()
 
   if( !"package:ggplot2" %in% search()){

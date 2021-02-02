@@ -16,6 +16,7 @@ declare_shims <- function(){
 }
 
 register_camcorder_shims <- function(){
+
   if(length(ls(print_envs)) == 0){
     declare_shims()
   }
@@ -41,10 +42,16 @@ register_camcorder_shims <- function(){
     )
   }
 
+  GG_RECORDING_ENV$shims_registered <- TRUE
+
 }
 
 detach_camcorder_shims <- function(){
-  detach(".camcorder")
+
+  if(!is.null(GG_RECORDING_ENV$shims_registered) &
+     isTRUE(GG_RECORDING_ENV$shims_registered)){
+    detach(".camcorder")
+  }
 
   if("package:ggplot2" %in% search()){
     registerS3method(
@@ -63,6 +70,9 @@ detach_camcorder_shims <- function(){
       envir = getNamespace("patchwork")
     )
   }
+
+  GG_RECORDING_ENV$shims_registered <- FALSE
+
 }
 
 
