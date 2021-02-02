@@ -34,7 +34,8 @@ Imports:
     tools,
     magick,
     pdftools,
-    rsvg
+    rsvg,
+    jsonlite
 Suggests: 
     knitr,
     rmarkdown
