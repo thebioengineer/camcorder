@@ -4,6 +4,7 @@
 \alias{gg_record}
 \alias{gg_playback}
 \alias{gg_resize_film}
+\alias{gg_stop_recording}
 \title{Record and generate plot histories}
 \usage{
 gg_record(
@@ -33,6 +34,8 @@ gg_playback(
 )
 
 gg_resize_film(height = NA, width = NA, units = NA, dpi = NA)
+
+gg_stop_recording()
 }
 \arguments{
 \item{dir}{directory to save the intermediate plots in}
@@ -88,18 +91,24 @@ Used initialize recording, nothing returned
 Returns nothing. Used to generate the gif.
 
 Returns the last plot generated, resized to new dimensions
+
+Returns nothing. used for side effect.
 }
 \description{
 Record plots created over time and generate a gif of the plots
    made in the R session.
 
 resize the film for recording, reprints and saves last plot
+
+Stop recording images with {camcorder}.
 }
 \section{Functions}{
 \itemize{
 \item \code{gg_playback}: 
 
 \item \code{gg_resize_film}: 
+
+\item \code{gg_stop_recording}: 
 }}
 
 \examples{
