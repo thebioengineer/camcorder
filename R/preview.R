@@ -11,9 +11,8 @@ preview_film <- function(){
 
     system2('open',
             args = c(
-              '-a Preview.app',
-              file.path(GG_RECORDING_ENV$recording_dir, records[length(records)])
-            ),
+              shQuote(file.path(GG_RECORDING_ENV$recording_dir, records[length(records)])
+            )),
             wait = FALSE)
 
   } else{
