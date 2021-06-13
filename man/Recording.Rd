@@ -9,13 +9,14 @@
 \usage{
 gg_record(
   dir = NULL,
-  device = c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps", "bmp"),
+  device = c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps"),
   scale = 1,
   width = NA,
   height = NA,
   units = c("in", "cm", "mm"),
   dpi = 300,
-  limitsize = TRUE
+  limitsize = TRUE,
+  device_ext = derive_ext(device)
 )
 
 gg_playback(
@@ -61,6 +62,8 @@ If not supplied, uses the size of current graphics device.}
 \item{limitsize}{When \code{TRUE} (the default), \code{ggsave} will not
 save images larger than 50x50 inches, to prevent the common error of
 specifying dimensions in pixels.}
+
+\item{device_ext}{extension to use for images created}
 
 \item{name}{name of gif}
 

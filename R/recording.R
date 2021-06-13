@@ -16,13 +16,14 @@ record_ggplot <- function(x, ...) {
     file.path(GG_RECORDING_ENV$recording_dir, paste0(
       format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
       ".",
-      GG_RECORDING_ENV$device
+      GG_RECORDING_ENV$device_ext
     ))
 
   suppressMessages({
     ggsave(
       filename = plot_file,
       plot = x,
+      device = GG_RECORDING_ENV$device,
       scale = GG_RECORDING_ENV$scale,
       width = GG_RECORDING_ENV$image_width,
       height = GG_RECORDING_ENV$image_height,

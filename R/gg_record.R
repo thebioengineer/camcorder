@@ -6,6 +6,7 @@
 #' @rdname Recording
 #'
 #' @param dir directory to save the intermediate plots in
+#' @param device_ext extension to use for images created
 #' @return Used initialize recording, nothing returned
 #' @inheritParams ggplot2::ggsave
 #'
@@ -34,7 +35,8 @@ gg_record <- function(dir = NULL,
                       height = NA,
                       units = c("in", "cm", "mm"),
                       dpi = 300,
-                      limitsize = TRUE
+                      limitsize = TRUE,
+                      device_ext = derive_ext(device)
 ){
 
 
@@ -47,6 +49,8 @@ gg_record <- function(dir = NULL,
 
   device <- tolower(device)
   device <- match.arg(device)
+  device_ext <- device
+
   units <- match.arg(units)
 
   if (!dir.exists(dir)) {
@@ -61,6 +65,7 @@ gg_record <- function(dir = NULL,
 
   GG_RECORDING_ENV$recording_dir <- dir
   GG_RECORDING_ENV$device        <- device
+  GG_RECORDING_ENV$device_ext    <- device_ext
   GG_RECORDING_ENV$is_temp_dir   <- is_temp_dir
 
   GG_RECORDING_ENV$image_width  <- width
