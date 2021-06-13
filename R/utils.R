@@ -3,7 +3,6 @@ q_lapply <- function(x, FUN, ...){
 }
 
 
-#' @importFrom callr r
 derive_ext <- function(x){
   if(is.character(x)){
     tolower(x)
