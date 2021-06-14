@@ -6,7 +6,9 @@
 #' @rdname Recording
 #'
 #' @param dir directory to save the intermediate plots in
-#' @param device_ext extension to use for images created
+#' @param device Device to use. Can either be a device function (e.g. png()), or
+#'     one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".
+#' @param device_ext file extension to use for images created. Does not usually need to be populated manually.
 #' @return Used initialize recording, nothing returned
 #' @inheritParams ggplot2::ggsave
 #'
@@ -36,7 +38,7 @@ gg_record <- function(dir = NULL,
                       units = c("in", "cm", "mm"),
                       dpi = 300,
                       limitsize = TRUE,
-                      device_ext = derive_ext(device)
+                      device_ext = NULL
 ){
 
 
@@ -49,7 +51,9 @@ gg_record <- function(dir = NULL,
 
   device <- tolower(device)
   device <- match.arg(device)
-  device_ext <- device
+  if(is.null(device_ext)){
+    device_ext <- derive_ext(device)
+  }
 
   units <- match.arg(units)
 

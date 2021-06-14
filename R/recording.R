@@ -40,6 +40,7 @@ record_ggplot <- function(x, ...) {
 
 }
 
+#' @importFrom utils capture.output
 record_patchwork <- function(x,...) {
 
     plot_file <-

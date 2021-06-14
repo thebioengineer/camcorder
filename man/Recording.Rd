@@ -16,7 +16,7 @@ gg_record(
   units = c("in", "cm", "mm"),
   dpi = 300,
   limitsize = TRUE,
-  device_ext = derive_ext(device)
+  device_ext = NULL
 )
 
 gg_playback(
@@ -41,9 +41,8 @@ gg_stop_recording()
 \arguments{
 \item{dir}{directory to save the intermediate plots in}
 
-\item{device}{Device to use. Can either be a device function
-(e.g. \code{\link[=png]{png()}}), or one of "eps", "ps", "tex" (pictex),
-"pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).}
+\item{device}{Device to use. Can either be a device function (e.g. png()), or
+one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".}
 
 \item{scale}{Multiplicative scaling factor.}
 
@@ -63,7 +62,7 @@ If not supplied, uses the size of current graphics device.}
 save images larger than 50x50 inches, to prevent the common error of
 specifying dimensions in pixels.}
 
-\item{device_ext}{extension to use for images created}
+\item{device_ext}{file extension to use for images created. Does not usually need to be populated manually.}
 
 \item{name}{name of gif}
 
