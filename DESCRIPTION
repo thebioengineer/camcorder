@@ -39,5 +39,6 @@ Imports:
     rlang
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown, 
+    markdown
 VignetteBuilder: knitr
