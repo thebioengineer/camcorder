@@ -49,8 +49,19 @@ gg_record <- function(dir = NULL,
     is_temp_dir <- FALSE
   }
 
-  device <- tolower(device)
-  device <- match.arg(device)
+  if(!is.function(device)){
+    device <- tolower(device)
+    device <- match.arg(device)
+  }else{
+    device_alt <- substitute(device)
+    device_alt <- tolower(device_alt)
+    device <- if(device_alt%in% c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps")){
+      device_alt
+    }else{
+      device
+    }
+  }
+
   if(is.null(device_ext)){
     device_ext <- derive_ext(device)
   }
@@ -126,7 +137,7 @@ gg_playback <-
 
     records <- list.files(
       path    = GG_RECORDING_ENV$recording_dir,
-      pattern = paste0("*.", GG_RECORDING_ENV$device, "$"),
+      pattern = paste0("*.", GG_RECORDING_ENV$device_ext, "$"),
       full.names = TRUE
     )
 
