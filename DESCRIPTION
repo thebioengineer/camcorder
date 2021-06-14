@@ -35,7 +35,8 @@ Imports:
     magick,
     pdftools,
     rsvg,
-    jsonlite
+    jsonlite,
+    rlang
 Suggests: 
     knitr,
     rmarkdown

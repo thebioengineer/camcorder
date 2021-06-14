@@ -1,28 +1,20 @@
-print_envs <- new.env()
 
-
-declare_shims <- function(){
-  assign(
-    "library",
-    get("shim_library",envir = asNamespace("camcorder")),
-    envir = print_envs
+#' @importFrom rlang env_bind caller_env
+declare_lib_shims <- function(env = caller_env()){
+  env_bind(env,
+    library = shim_library,
+    require = shim_require
   )
-  assign(
-    "require",
-    get("shim_require",envir = getNamespace("camcorder")),
-    envir = print_envs
-  )
+}
 
+#' @importFrom rlang env_unbind caller_env
+remove_lib_shims <- function(env = caller_env()){
+  env_unbind(  env, nms = c( "library", "require") )
 }
 
 register_camcorder_shims <- function(){
 
-  if(length(ls(print_envs)) == 0){
-    declare_shims()
-  }
-  suppressMessages({
-    attach(print_envs, name = ".camcorder")
-  })
+  declare_lib_shims()
 
   if("package:ggplot2" %in% search()){
     registerS3method(
@@ -50,7 +42,7 @@ detach_camcorder_shims <- function(){
 
   if(!is.null(GG_RECORDING_ENV$shims_registered) &
      isTRUE(GG_RECORDING_ENV$shims_registered)){
-    detach(".camcorder")
+    remove_lib_shims()
   }
 
   if("package:ggplot2" %in% search()){
