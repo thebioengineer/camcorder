@@ -33,7 +33,7 @@ library(patchwork)
 
 gg_record(
   dir = file.path(tempdir(),"recording"), # where to save the recording
-  device = "png", # device to use to save images
+  device = png, # device to use to save images - either a character string or function
   width = 4, # width of saved image
   height = 6, # height of saved image
   units = "in", # units for width and height

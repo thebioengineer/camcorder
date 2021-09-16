@@ -4,10 +4,10 @@ preview_film <- function(){
 
   records <- list.files(
       path    = GG_RECORDING_ENV$recording_dir,
-      pattern = paste0("*.", GG_RECORDING_ENV$device, "$")
+      pattern = paste0("*.", GG_RECORDING_ENV$device_ext, "$")
     )
 
-  if (tolower(GG_RECORDING_ENV$device) == "pdf") {
+  if (tolower(GG_RECORDING_ENV$device_ext) == "pdf") {
 
     system2('open',
             args = c(

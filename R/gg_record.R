@@ -6,6 +6,9 @@
 #' @rdname Recording
 #'
 #' @param dir directory to save the intermediate plots in
+#' @param device Device to use. Can either be a device function (e.g. png()), or
+#'     one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".
+#' @param device_ext file extension to use for images created. Does not usually need to be populated manually.
 #' @return Used initialize recording, nothing returned
 #' @inheritParams ggplot2::ggsave
 #'
@@ -34,7 +37,8 @@ gg_record <- function(dir = NULL,
                       height = NA,
                       units = c("in", "cm", "mm"),
                       dpi = 300,
-                      limitsize = TRUE
+                      limitsize = TRUE,
+                      device_ext = NULL
 ){
 
 
@@ -45,8 +49,23 @@ gg_record <- function(dir = NULL,
     is_temp_dir <- FALSE
   }
 
-  device <- tolower(device)
-  device <- match.arg(device)
+  if(!is.function(device)){
+    device <- tolower(device)
+    device <- match.arg(device)
+  }else{
+    device_alt <- substitute(device)
+    device_alt <- tolower(device_alt)
+    device <- if(device_alt%in% c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps")){
+      device_alt
+    }else{
+      device
+    }
+  }
+
+  if(is.null(device_ext)){
+    device_ext <- derive_ext(device)
+  }
+
   units <- match.arg(units)
 
   if (!dir.exists(dir)) {
@@ -61,6 +80,7 @@ gg_record <- function(dir = NULL,
 
   GG_RECORDING_ENV$recording_dir <- dir
   GG_RECORDING_ENV$device        <- device
+  GG_RECORDING_ENV$device_ext    <- device_ext
   GG_RECORDING_ENV$is_temp_dir   <- is_temp_dir
 
   GG_RECORDING_ENV$image_width  <- width
@@ -117,7 +137,7 @@ gg_playback <-
 
     records <- list.files(
       path    = GG_RECORDING_ENV$recording_dir,
-      pattern = paste0("*.", GG_RECORDING_ENV$device, "$"),
+      pattern = paste0("*.", GG_RECORDING_ENV$device_ext, "$"),
       full.names = TRUE
     )
 
