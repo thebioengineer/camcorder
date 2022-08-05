@@ -94,6 +94,10 @@ gg_record <- function(dir = NULL,
 
   register_camcorder_shims()
 
+  if( !"package:ggplot2" %in% search()){
+    warning("`ggplot2` not loaded!")
+  }
+
   invisible()
 }
 

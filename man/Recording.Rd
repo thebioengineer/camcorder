@@ -46,19 +46,19 @@ one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".}
 
 \item{scale}{Multiplicative scaling factor.}
 
-\item{width}{Plot size in \code{units} ("in", "cm", "mm", or "px").
+\item{width}{Plot size in \code{units} ("in", "cm", or "mm").
 If not supplied, uses the size of current graphics device.}
 
-\item{height}{Plot size in \code{units} ("in", "cm", "mm", or "px").
+\item{height}{Plot size in \code{units} ("in", "cm", or "mm").
 If not supplied, uses the size of current graphics device.}
 
-\item{units}{Plot size in \code{units} ("in", "cm", "mm", or "px").
+\item{units}{Plot size in \code{units} ("in", "cm", or "mm").
 If not supplied, uses the size of current graphics device.}
 
 \item{dpi}{Plot resolution. Also accepts a string input: "retina" (320),
 "print" (300), or "screen" (72). Applies only to raster output types.}
 
-\item{limitsize}{When \code{TRUE} (the default), \code{ggsave()} will not
+\item{limitsize}{When \code{TRUE} (the default), \code{ggsave} will not
 save images larger than 50x50 inches, to prevent the common error of
 specifying dimensions in pixels.}
 
@@ -72,15 +72,14 @@ specifying dimensions in pixels.}
 
 \item{frame_duration}{n seconds each plot should be shown}
 
-\item{loop}{if the gif should be repeated. Set to FALSE to only play
-once, or a number to indicate how many times to repeat after the first.}
+\item{loop}{should the gif play forever (FALSE to only play once)}
 
 \item{image_resize}{size to rescale images to in pixels}
 
 \item{background}{color to set the background. A valid color string such as "navyblue" or
 "#000080". Use "none" for transparancy.}
 
-\item{progress}{print some verbose status output}
+\item{progress}{show progress bar}
 
 \item{playback}{Boolean, should the recording start playing after it is
 turned into a gif? defaults to TRUE}

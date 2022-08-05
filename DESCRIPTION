@@ -36,14 +36,9 @@ Imports:
     pdftools,
     rsvg,
     jsonlite,
-    rlang,
-    grDevices,
-    svglite
+    rlang
 Suggests: 
     knitr,
-    rmarkdown,
-    markdown,
-    ragg,
-    grid,
-    covr
+    rmarkdown, 
+    markdown
 VignetteBuilder: knitr
