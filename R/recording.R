@@ -99,20 +99,19 @@ record_patchwork <- function(x,...) {
 #'
 #' @examples
 #'
-#' library(camcorder)
 #' library(grid)
 #'
 #' gg_record(device = "png", width = 10, height = 8, units = "in", dpi = 320)
 #'
 #' ## make a plot using grobs
-#' grid.draw(rectGrob(width = 2, height = 2, gp = gpar(color = "green")))
+#' grid.draw(rectGrob(width = 2, height = 2, gp = gpar(fill = "green")))
 #' grid.draw(textGrob("Hello world"))
 #'
 #' record_polaroid()
 #'
 #' gg_stop_recording()
 #'
-#' @importFrom grDevices dev.cur dev.copy dev.set
+#' @importFrom grDevices dev.cur dev.copy dev.set dev.off
 #' @importFrom utils capture.output
 #'
 #' @export
@@ -125,7 +124,7 @@ record_polaroid <- function(){
       GG_RECORDING_ENV$device
     ))
 
-  dev <- plot_dev(NULL, plot_file, dpi = GG_RECORDING_ENV$image_dpi)
+  dev <- plot_dev(plot_file, dpi = GG_RECORDING_ENV$image_dpi)
 
   dim <- plot_dim(
     c(GG_RECORDING_ENV$image_width, GG_RECORDING_ENV$image_height),
@@ -136,16 +135,18 @@ record_polaroid <- function(){
   )
 
   suppressMessages({
+    capture.output({
+      old_dev <- dev.cur()
 
-    old_dev <- dev.cur()
+      dev.copy(dev,
+               filename = plot_file,
+               width = dim[1],
+               height = dim[2])
 
-    dev.copy(dev, filename = plot_file, width = dim[1], height = dim[2])
-
-    on.exit(capture.output({
       dev.off()
-      if (old_dev > 1) dev.set(old_dev)
-    }))
-
+      if (old_dev > 1)
+        dev.set(old_dev)
+    })
   })
 
   preview_film()
@@ -188,26 +189,9 @@ plot_dim <- function(dim = c(NA, NA),
 #' @importFrom grDevices postscript png jpeg tiff pictex pdf win.metafile bmp
 #' @importFrom svglite svglite
 #' @importFrom tools file_ext
-plot_dev <- function (device, filename = NULL, dpi = 300) {
+plot_dev <- function (filename = NULL, dpi = 300) {
   force(filename)
   force(dpi)
-
-  if (is.function(device)) {
-    args <- formals(device)
-    call_args <- list()
-    if ("file" %in% names(args)) {
-      call_args$file <- filename
-    }
-    if ("res" %in% names(args)) {
-      call_args$res <- dpi
-    }
-    if ("units" %in% names(args)) {
-      call_args$units <- "in"
-    }
-    dev <- function(...) do.call(device, modify_list(list(...),
-                                                     call_args))
-    return(dev)
-  }
 
   eps <- function(filename, ...) {
     grDevices::postscript(file = filename, ..., onefile = FALSE,
@@ -234,9 +218,9 @@ plot_dev <- function (device, filename = NULL, dpi = 300) {
                   jpeg = function(...) jpeg_dev(..., res = dpi, units = "in"),
                   bmp = function(...) grDevices::bmp(..., res = dpi, units = "in"),
                   tiff = function(...) tiff_dev(..., res = dpi, units = "in"))
-  if (is.null(device)) {
-    device <- tolower(tools::file_ext(filename))
-  }
+
+  device <- tolower(tools::file_ext(filename))
+
   if (!is.character(device) || length(device) != 1) {
     stop("`device` must be NULL, a string or a function.")
   }

@@ -13,13 +13,12 @@ save it using the current camcorder settings
 }
 \examples{
 
-library(camcorder)
 library(grid)
 
 gg_record(device = "png", width = 10, height = 8, units = "in", dpi = 320)
 
 ## make a plot using grobs
-grid.draw(rectGrob(width = 2, height = 2, gp = gpar(color = "green")))
+grid.draw(rectGrob(width = 2, height = 2, gp = gpar(fill = "green")))
 grid.draw(textGrob("Hello world"))
 
 record_polaroid()

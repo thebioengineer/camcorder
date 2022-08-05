@@ -43,5 +43,6 @@ Suggests:
     knitr,
     rmarkdown, 
     markdown,
-    ragg
+    ragg,
+    grid
 VignetteBuilder: knitr
