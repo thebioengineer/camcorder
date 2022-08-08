@@ -4,3 +4,4 @@
 ^\.github$
 inst/gif_samples/
 readme.md
+^codecov\.yml$
