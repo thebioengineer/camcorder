@@ -2,6 +2,6 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^\.github$
-inst/gif_samples/
+inst/gif_samples/*
 readme.md
 ^codecov\.yml$
