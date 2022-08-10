@@ -186,7 +186,6 @@ plot_dim <- function(dim = c(NA, NA),
 }
 
 # copied from ggplot2 internal plot_dev function
-#' @importFrom grDevices postscript png jpeg tiff pictex pdf win.metafile bmp
 #' @importFrom svglite svglite
 #' @importFrom tools file_ext
 plot_dev <- function (filename = NULL, dpi = 300) {
