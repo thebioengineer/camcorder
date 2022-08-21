@@ -20,13 +20,9 @@ test_that("recording a basic ggplot works", {
   ## Recording added a single file
   expect_equal(length(list.files(rec_dir)), 1)
 
-  ## preview film shows the file
-  preview_html <-  preview_film()
-
-  file.rename(preview_html,file.path(tempdir(),"camcorder_preview_ggplot.html"))
-
+  file.rename(list.files(rec_dir),file.path(tempdir(),"camcorder_preview_ggplot2.png"))
   expect_snapshot_file(
-    path = file.path(tempdir(),"camcorder_preview_ggplot.html")
+    path = file.path(tempdir(),"camcorder_preview_ggplot2.png")
   )
 
   expect_equal(
@@ -62,13 +58,9 @@ test_that("recording a basic patchwork works", {
   ## Recording added a single file
   expect_equal(length(list.files(rec_dir)), 1)
 
-  ## preview film shows the file
-  preview_html <-  preview_film()
-
-  file.rename(preview_html,file.path(tempdir(),"camcorder_preview_patchwork.html"))
-
+  file.rename(list.files(rec_dir),file.path(tempdir(),"camcorder_preview_patchwork.png"))
   expect_snapshot_file(
-    path = file.path(tempdir(),"camcorder_preview_patchwork.html")
+    path = file.path(tempdir(),"camcorder_preview_patchwork.png")
   )
 
   expect_equal(
@@ -100,14 +92,11 @@ test_that("recording a basic graphic devices works", {
   ## Recording added a single file
   expect_equal(length(list.files(rec_dir)), 1)
 
-  ## preview film shows the file
-  preview_html <-  preview_film()
-
-  file.rename(preview_html,file.path(tempdir(),"camcorder_preview_polaroid.html"))
-
+  file.rename(list.files(rec_dir),file.path(tempdir(),"camcorder_preview_polaroid.png"))
   expect_snapshot_file(
-    path = file.path(tempdir(),"camcorder_preview_polaroid.html")
+    path = file.path(tempdir(),"camcorder_preview_polaroid.png")
   )
+
 
 })
 
