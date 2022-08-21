@@ -45,5 +45,8 @@ Suggests:
     markdown,
     ragg,
     grid,
-    covr
+    covr,
+    testthat (>= 3.0.0),
+    patchwork
 VignetteBuilder: knitr
+Config/testthat/edition: 3

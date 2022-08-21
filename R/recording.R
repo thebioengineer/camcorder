@@ -123,6 +123,7 @@ record_polaroid <- function(){
       ".",
       GG_RECORDING_ENV$device
     ))
+  suppressMessages({
 
   dev <- plot_dev(plot_file, dpi = GG_RECORDING_ENV$image_dpi)
 
@@ -134,7 +135,7 @@ record_polaroid <- function(){
     dpi = GG_RECORDING_ENV$image_dpi
   )
 
-  suppressMessages({
+
     capture.output({
       old_dev <- dev.cur()
 
