@@ -29,7 +29,8 @@ preview_film <- function(){
       viewer(image_viewer_html)
     }
   }
-  invisible()
+
+  invisible(image_viewer_html)
 
 }
 

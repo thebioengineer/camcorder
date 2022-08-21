@@ -41,7 +41,6 @@ gg_record <- function(dir = NULL,
                       device_ext = NULL
 ){
 
-
   if (is.null(dir)) {
     is_temp_dir <- TRUE
     dir <- tempdir()
@@ -71,7 +70,7 @@ gg_record <- function(dir = NULL,
   if (!dir.exists(dir)) {
     dir.create(dir, recursive = TRUE)
   } else{
-    if (length(list.files(dir, pattern = paste0("[.]", device, "$"))) > 1) {
+    if (length(list.files(dir, pattern = paste0("[.]", device_ext, "$"))) > 1) {
       warning(
         "Writing to a folder that already exists. gg_playback may use more files than intended!"
       )
@@ -93,10 +92,6 @@ gg_record <- function(dir = NULL,
   GG_RECORDING_ENV$shims_registered <- FALSE
 
   register_camcorder_shims()
-
-  if( !"package:ggplot2" %in% search()){
-    warning("`ggplot2` not loaded!")
-  }
 
   invisible()
 }

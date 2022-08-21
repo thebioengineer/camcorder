@@ -2,7 +2,8 @@
 # camcorder <img src='man/figures/logo.png' align="right" height="200" />
 
 <!-- badges: start -->
-[![R build status](https://github.com/thebioengineer/camcorder/workflows/R-CMD-check/badge.svg)](https://github.com/thebioengineer/camcorder/actions)
+[![Codecov test coverage](https://codecov.io/gh/thebioengineer/camcorder/branch/main/graph/badge.svg)](https://app.codecov.io/gh/thebioengineer/camcorder?branch=main)
+[![R-CMD-check](https://github.com/thebioengineer/camcorder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/thebioengineer/camcorder/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 
