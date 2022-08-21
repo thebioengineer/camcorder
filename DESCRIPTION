@@ -1,7 +1,7 @@
 Package: camcorder
 Type: Package
 Title: Record Your 'ggplot2' History
-Version: 0.0.2.9000
+Version: 0.0.3
 Authors@R: 
     c(
       person(
@@ -47,6 +47,7 @@ Suggests:
     grid,
     covr,
     testthat (>= 3.0.0),
-    patchwork
+    patchwork,
+    withr
 VignetteBuilder: knitr
 Config/testthat/edition: 3

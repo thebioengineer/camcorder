@@ -18,8 +18,19 @@ derive_ext <- function(x){
     )[[tolower(x)]]
   }else{
     stopifnot(is.function(x))
-    x_sub <- as.character(substitute(x))
-    if(x_sub %in% c("png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "postscript")){
+    x_sub <- format(substitute(x))
+    if (any(x_sub %in% c(
+      "png",
+      "pdf",
+      "jpeg",
+      "bmp",
+      "tiff",
+      "emf",
+      "svg",
+      "eps",
+      "postscript"
+    ))) {
+
       return(
         c(
           "png" = "png",
@@ -31,7 +42,7 @@ derive_ext <- function(x){
           "svg" = "svg",
           "eps" = "eps",
           "postscript" = "ps"
-        )[[x_sub]]
+        )[[x_sub[1]]]
       )
     }else{
       tryCatch({
