@@ -30,7 +30,7 @@ preview_film <- function(){
     }
   }
 
-  invisible(image_viewer_html)
+  invisible()
 
 }
 
