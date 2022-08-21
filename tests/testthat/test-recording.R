@@ -141,13 +141,13 @@ test_that("recording works - gif output", {
 
 test_that("resizing a plot works", {
 
-  rec_dir <- file.path(tempdir(),"camcorder_tests_ggplot")
+  rec_dir <- file.path(tempdir(),"camcorder_tests_resizing")
 
   if(dir.exists(rec_dir)){
     unlink(rec_dir,recursive = TRUE)
   }
 
-  gg_record(dir = rec_dir)
+  gg_record(dir = rec_dir,width = 5, height = 5, units = "in", dpi = 100)
   on.exit(gg_stop_recording())
 
   mtcars_plot <- ggplot2::ggplot(mtcars) +
@@ -155,24 +155,26 @@ test_that("resizing a plot works", {
 
   record_ggplot(mtcars_plot)
 
+  gg_resize_film(height = 10, width = 10, units = "in")
+
+  ##re-record with larger size. gg_resize_film prints and thus would record
+  ##automatically normally
+  record_ggplot(mtcars_plot$last_plot)
+
   ## Recording created directory
   expect_true(dir.exists(rec_dir))
 
   ## Recording added a single file
-  expect_equal(length(list.files(rec_dir)), 1)
+  expect_equal(length(list.files(rec_dir)), 2)
 
-  ## preview film shows the file
-  preview_html <-  preview_film()
-
-  file.rename(preview_html,file.path(tempdir(),"camcorder_preview_ggplot.html"))
-
-  expect_snapshot_file(
-    path = file.path(tempdir(),"camcorder_preview_ggplot.html")
-  )
+  image_sizes <- list.files(rec_dir,full.names = TRUE) %>%
+    lapply(magick::image_read) %>%
+    lapply(magick::image_info) %>%
+    sapply(function(x){paste(x$width,"x",x$height)})
 
   expect_equal(
-    GG_RECORDING_ENV$last_plot,
-    mtcars_plot
+    image_sizes,
+    c("500 x 500", "1000 x 1000")
   )
 
 })

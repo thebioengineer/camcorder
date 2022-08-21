@@ -47,6 +47,7 @@ Suggests:
     grid,
     covr,
     testthat (>= 3.0.0),
-    patchwork
+    patchwork,
+    withr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
