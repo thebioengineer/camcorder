@@ -14,20 +14,23 @@ test_that("recording a basic ggplot works", {
 
   record_ggplot(mtcars_plot)
 
+
+  expect_equal(
+    GG_RECORDING_ENV$last_plot,
+    mtcars_plot
+  )
+
   ## Recording created directory
   expect_true(dir.exists(rec_dir))
 
   ## Recording added a single file
   expect_equal(length(list.files(rec_dir)), 1)
 
+  skip_on_ci()
+
   file.rename(list.files(rec_dir,full.names = TRUE),file.path(tempdir(),"camcorder_preview_ggplot2.png"))
   expect_snapshot_file(
     path = file.path(tempdir(),"camcorder_preview_ggplot2.png")
-  )
-
-  expect_equal(
-    GG_RECORDING_ENV$last_plot,
-    mtcars_plot
   )
 
 })
@@ -52,20 +55,21 @@ test_that("recording a basic patchwork works", {
 
   record_patchwork(mtcars_patchwork)
 
+  expect_equal(
+    GG_RECORDING_ENV$last_plot,
+    mtcars_patchwork
+  )
   ## Recording created directory
   expect_true(dir.exists(rec_dir))
 
   ## Recording added a single file
   expect_equal(length(list.files(rec_dir)), 1)
 
+  skip_on_ci()
+
   file.rename(list.files(rec_dir,full.names = TRUE),file.path(tempdir(),"camcorder_preview_patchwork.png"))
   expect_snapshot_file(
     path = file.path(tempdir(),"camcorder_preview_patchwork.png")
-  )
-
-  expect_equal(
-    GG_RECORDING_ENV$last_plot,
-    mtcars_patchwork
   )
 
   })
@@ -92,6 +96,8 @@ test_that("recording a basic graphic devices works", {
   ## Recording added a single file
   expect_equal(length(list.files(rec_dir)), 1)
 
+  skip_on_ci()
+
   file.rename(list.files(rec_dir,full.names = TRUE),file.path(tempdir(),"camcorder_preview_polaroid.png"))
   expect_snapshot_file(
     path = file.path(tempdir(),"camcorder_preview_polaroid.png")
@@ -101,6 +107,8 @@ test_that("recording a basic graphic devices works", {
 })
 
 test_that("recording works - gif output", {
+
+  skip_on_ci()
 
   rec_dir <- file.path(tempdir(),"camcorder_tests_playback")
 
