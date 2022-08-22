@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  warnin = FALSE,
+  warning = FALSE,
   message = FALSE
 )
 ```
@@ -41,11 +41,11 @@ The idea of tracking your plots as part of your development process and generati
 <table>
 <tr>
 <td>
-<p><i><a href = 'https://twitter.com/cedscherer/status/1281653392859820032'>Cédric Scherer, TidyTuesday 2020/28</a></i></p>
+<p><i>Cédric Scherer<br><a href = 'https://twitter.com/cedscherer/status/1281653392859820032'>TidyTuesday 2020/28</a></i></p>
 <img src = "man/figures/cscherer_coffee_ratings.gif" height = "350">
 </td>
 <td>
-<p><i><a href = 'https://mobile.twitter.com/geokaramanis/status/1248147973206413312'>Georgios Karamanis, TidyTuesday 2020/15</a></i></p>
+<p><i>Georgios Karamanis<br><a href = 'https://mobile.twitter.com/geokaramanis/status/1248147973206413312'>TidyTuesday 2020/15</a></i></p>
 <img src = "man/figures/gkaramanis_tour_de_france.gif" height = "350">
 </td>
 </tr>
@@ -63,64 +63,81 @@ library(ggplot2)
 library(camcorder)
 
 gg_record(
-  dir = file.path(tempdir(),"recording"), # where to save the recording
+  dir = file.path(tempdir(), "recording"), # where to save the recording
   device = "png", # device to use to save images
-  width = 4, # width of saved image
-  height = 6, # height of saved image
-  units = "in", # units for width and height
-  dpi = 300 # dpi to use when saving image
+  width = 4,      # width of saved image
+  height = 6,     # height of saved image
+  units = "in",   # units for width and height
+  dpi = 300       # dpi to use when saving image
 )
 
 ```
 
-Once the recorder is initialized, any ggplot that is made and printed will be automagically recorded.
+Once the recorder is initialized, any ggplot that is made and printed will be automacically (or *automagically*) recorded.
 
 ```{r plots-plots-plots, results = "hide"}
 
-ggplot(mtcars) +
-  geom_point(aes(x = mpg, y = hp))
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point()
 
-ggplot(mtcars) + 
-  geom_point(aes(x = mpg, y = hp, shape = as.factor(gear)))
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_point() +
+  geom_path()
 
-ggplot(mtcars) + 
-  geom_point(aes(x = mpg, y = hp, color = gear))
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_point(aes(shape = as.factor(gear)))
 
-ggplot(mtcars) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  geom_smooth(aes(x = mpg, y = hp))
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_point(aes(color = as.factor(gear)))
 
-ggplot(mtcars) +
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear))
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point(aes(color = disp)) +
+  geom_smooth()
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_smooth() +
+  geom_point(aes(color = disp))
+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c()
+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
   theme_light()
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light() +
   ggtitle("MPG vs Horse Power!")
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
-  labs(subtitle = "Power and economy, the classic compromise!")
-
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light() +
   labs(
+    title = "MPG vs Horse Power!",
+    subtitle = "Power and economy, the classic compromise!"
+  )
+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light(base_family = "Roboto Mono") +
+  labs(
+    title = "MPG vs Horse Power!",
     subtitle = "Power and economy, the classic compromise!", 
     x = "Efficiency (Miles/Gallon)",
-    y = "Power (Horsepower)")
+    y = "Power (Horsepower)",
+    color = "Displacement\n(Cubic Inch)"
+  )
 
 ```
 
@@ -139,32 +156,38 @@ gg_resize_film(
 
 ```{r plots-plots-plots-2, results = "hide"}
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light() +
   labs(
+    title = "MPG vs Horse Power!",
     subtitle = "Power and economy, the classic compromise!", 
     x = "Efficiency (Miles/Gallon)",
-    y = "Power (Horsepower)") +
+    y = "Power (Horsepower)",
+    color = "Displacement\n(Cubic Inch)"
+  ) +
   theme(
-    legend.position = "bottom",
-    panel.background = element_rect(colour = "green")
+    plot.title.position = "plot",
+    panel.background = element_rect(colour = "turquoise")
   )
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light()  +
   labs(
+    title = "MPG vs Horse Power!",
     subtitle = "Power and economy, the classic compromise!", 
     x = "Efficiency (Miles/Gallon)",
-    y = "Power (Horsepower)") +
+    y = "Power (Horsepower)",
+    color = "Displacement\n(Cubic Inch)"
+  ) +
   theme(
-    legend.position = "bottom",
-    panel.background = element_rect(colour = "green",fill = "green")
+    plot.title.position = "plot",
+    panel.background = element_rect(colour = "turquoise", fill = "turquoise")
   )
 
 ```
@@ -179,7 +202,7 @@ The user can define:
 ```{r}
 
 gg_playback(
-  name = file.path(tempdir(),"recording","vignette_gif.gif"),
+  name = file.path(tempdir(), "recording", "vignette_gif.gif"),
   first_image_duration = 8,
   last_image_duration = 12,
   frame_duration = .25

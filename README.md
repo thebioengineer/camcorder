@@ -10,13 +10,14 @@ coverage](https://codecov.io/gh/thebioengineer/camcorder/branch/main/graph/badge
 [![R-CMD-check](https://github.com/thebioengineer/camcorder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/thebioengineer/camcorder/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal for {camcorder} is to track and record the ggplots that are
-created across one or multiple sessions with the eventual goal of
-creating a gif showing all the plots created sequentially.
+`{camcorder}` is an an R package to track and automatically save
+graphics generated with `{ggplot2}` that are created across one or
+multiple sessions with the eventual goal of creating a gif showing all
+the plots created sequentially.
 
 ## Installation
 
-Currently {camcorder} is only available on github, and can be installed
+Currently {camcorder} is only available on GitHub, and can be installed
 using the following command.
 
 ``` r
@@ -27,7 +28,7 @@ remotes::install_github("thebioengineer/camcorder")
 ## End Product
 
 The idea of tracking your plots as part of your development process and
-generating a gif/movie was popularized by two contributors to this
+generating a making-of movie was popularized by two contributors to this
 project: Georgios Karamanis and Cédric Scherer. They have wowed the R
 community weekly with their “how its made” videos. Below are a few
 examples of the goal end products.
@@ -36,15 +37,17 @@ examples of the goal end products.
 <tr>
 <td>
 <p>
-<i><a href = 'https://twitter.com/cedscherer/status/1281653392859820032'>Cédric
-Scherer, TidyTuesday 2020/28</a></i>
+<i>Cédric
+Scherer<br><a href = 'https://twitter.com/cedscherer/status/1281653392859820032'>TidyTuesday
+2020/28</a></i>
 </p>
 <img src = "man/figures/cscherer_coffee_ratings.gif" height = "350">
 </td>
 <td>
 <p>
-<i><a href = 'https://mobile.twitter.com/geokaramanis/status/1248147973206413312'>Georgios
-Karamanis, TidyTuesday 2020/15</a></i>
+<i>Georgios
+Karamanis<br><a href = 'https://mobile.twitter.com/geokaramanis/status/1248147973206413312'>TidyTuesday
+2020/15</a></i>
 </p>
 <img src = "man/figures/gkaramanis_tour_de_france.gif" height = "350">
 </td>
@@ -62,7 +65,6 @@ closed.
 
 ``` r
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 4.1.3
 library(camcorder)
 
 gg_record(
