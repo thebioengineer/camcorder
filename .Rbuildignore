@@ -5,3 +5,6 @@
 inst/gif_samples/*
 readme.md
 ^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

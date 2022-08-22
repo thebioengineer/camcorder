@@ -1,0 +1,21 @@
+url: ~
+template:
+  bootstrap: 5
+  bslib:
+    secondary: "#28A87D"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+
+home:
+  title: camcorder
+  description: >
+    `{camcorder}` is an an R package for s to track and record graphics generated
+    with `{ggplot2}` that are created across one or multiple sessions with the
+    eventual goal of creating a gif showing all the plots created sequentially.
+
+authors:
+  footer:
+    roles: [cre, aut]
+    text: "{camcorder} is created and maintained by"
+  sidebar:
+    roles: [aut, ctb]
