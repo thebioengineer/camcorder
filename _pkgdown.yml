@@ -14,6 +14,12 @@ home:
     eventual goal of creating a gif showing all the plots created sequentially.
 
 authors:
+  Ellis Hughes:
+    href: https://github.com/thebioengineer
+  Georgios Karamanis:
+    href: https://karaman.is
+  Cédric Scherer:
+    href: https://cedricscherer.com
   footer:
     roles: [cre, aut]
     text: "{camcorder} is created and maintained by"
