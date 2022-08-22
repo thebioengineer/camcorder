@@ -25,3 +25,8 @@ authors:
     text: "{camcorder} is created and maintained by"
   sidebar:
     roles: [aut, ctb]
+
+navbar:
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/thebioengineer/camcorder
