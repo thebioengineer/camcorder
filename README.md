@@ -12,8 +12,17 @@ coverage](https://codecov.io/gh/thebioengineer/camcorder/branch/main/graph/badge
 
 `{camcorder}` is an an R package to track and automatically save
 graphics generated with `{ggplot2}` that are created across one or
-multiple sessions with the eventual goal of creating a gif showing all
-the plots created sequentially.
+multiple sessions with the eventual goal of creating a GIF showing all
+the plots saved sequentially during the design process.
+
+After installation, the package enables you to:
+
+-   save a ggplot automatically every time you run `ggplot()` in any
+    format with given specifications
+-   generate a GIF that showcases every step of the design process using
+    those image files
+-   inspect the ggplot output directly with your specifications in the
+    RStudio IDE—you’ll get what you see[^1]
 
 ## Installation
 
@@ -25,7 +34,7 @@ using the following command.
 remotes::install_github("thebioengineer/camcorder")
 ```
 
-## End Product
+## Goal End Product
 
 The idea of tracking your plots as part of your development process and
 generating a making-of movie was popularized by two contributors to this
@@ -37,17 +46,15 @@ examples of the goal end products.
 <tr>
 <td>
 <p>
-<i>Cédric
-Scherer<br><a href = 'https://twitter.com/cedscherer/status/1281653392859820032'>TidyTuesday
-2020/28</a></i>
+<i><a href = 'https://twitter.com/cedscherer/status/1281653392859820032'>TidyTuesday
+2020/28</a><br>by Cédric Scherer</i>
 </p>
 <img src = "man/figures/cscherer_coffee_ratings.gif" height = "350">
 </td>
 <td>
 <p>
-<i>Georgios
-Karamanis<br><a href = 'https://mobile.twitter.com/geokaramanis/status/1248147973206413312'>TidyTuesday
-2020/15</a></i>
+<i><a href = 'https://mobile.twitter.com/geokaramanis/status/1248147973206413312'>TidyTuesday
+2020/15</a><br>by Georgios Karamanis</i>
 </p>
 <img src = "man/figures/gkaramanis_tour_de_france.gif" height = "350">
 </td>
@@ -68,63 +75,78 @@ library(ggplot2)
 library(camcorder)
 
 gg_record(
-  dir = file.path(tempdir(),"recording"), # where to save the recording
+  dir = file.path(tempdir(), "recording100"), # where to save the recording
   device = "png", # device to use to save images
-  width = 4, # width of saved image
-  height = 6, # height of saved image
-  units = "in", # units for width and height
-  dpi = 300 # dpi to use when saving image
+  width = 4,      # width of saved image
+  height = 6,     # height of saved image
+  units = "in",   # units for width and height
+  dpi = 300       # dpi to use when saving image
 )
 ```
 
 Once the recorder is initialized, any ggplot that is made and printed
-will be automagically recorded.
+will be automatically (or *automagically*[^2]) recorded.
 
 ``` r
-ggplot(mtcars) +
-  geom_point(aes(x = mpg, y = hp))
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point()
 
-ggplot(mtcars) + 
-  geom_point(aes(x = mpg, y = hp, shape = as.factor(gear)))
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_point(aes(shape = as.factor(gear)))
 
-ggplot(mtcars) + 
-  geom_point(aes(x = mpg, y = hp, color = gear))
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_point(aes(color = as.factor(gear)))
 
-ggplot(mtcars) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  geom_smooth(aes(x = mpg, y = hp))
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_point(aes(color = as.factor(gear))) +
+  geom_path()
 
-ggplot(mtcars) +
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear))
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point(aes(color = disp)) +
+  geom_smooth()
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_smooth() +
+  geom_point(aes(color = disp))
+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
   theme_light()
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")
-
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
-  labs(subtitle = "Power and economy, the classic compromise!")
-
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light() +
   labs(
+    title = "MPG vs Horse Power!",
+    subtitle = "Power and economy, the classic compromise!"
+  )
+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light(base_family = "Roboto Mono") +
+  labs(
+    title = "MPG vs Horse Power!",
+    subtitle = "Power and economy, the classic compromise!"
+  )
+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light(base_family = "Roboto Mono") +
+  labs(
+    title = "MPG vs Horse Power!",
     subtitle = "Power and economy, the classic compromise!", 
     x = "Efficiency (Miles/Gallon)",
-    y = "Power (Horsepower)")
+    y = "Power (Horsepower)",
+    color = "Displacement\n(Cubic Inch)"
+  )
 ```
 
 If at any point, that you want to save your plots in a different format
@@ -142,50 +164,63 @@ gg_resize_film(
 ```
 
 ``` r
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light(base_family = "Roboto Mono") +
   labs(
+    title = "MPG vs Horse Power!",
     subtitle = "Power and economy, the classic compromise!", 
     x = "Efficiency (Miles/Gallon)",
-    y = "Power (Horsepower)") +
+    y = "Power (Horsepower)",
+    color = "Displacement\n(Cubic Inch)"
+  ) +
   theme(
-    legend.position = "bottom",
-    panel.background = element_rect(colour = "green")
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold")
   )
 
-ggplot(mtcars) + 
-  geom_smooth(aes(x = mpg, y = hp)) +
-  geom_point(aes(x = mpg, y = hp, color = gear)) +
-  theme_light()+
-  ggtitle("MPG vs Horse Power!")+
+ggplot(mtcars, aes(x = mpg, y = hp)) + 
+  geom_smooth() +
+  geom_point(aes(color = disp)) +
+  scale_color_viridis_c() +
+  theme_light(base_family = "Roboto Mono")  +
   labs(
+    title = "MPG vs Horse Power!",
     subtitle = "Power and economy, the classic compromise!", 
     x = "Efficiency (Miles/Gallon)",
-    y = "Power (Horsepower)") +
+    y = "Power (Horsepower)",
+    color = "Displacement\n(Cubic Inch)"
+  ) +
   theme(
-    legend.position = "bottom",
-    panel.background = element_rect(colour = "green",fill = "green")
+    plot.title.position = "plot",
+    plot.title = element_text(face = "bold"),
+    panel.background = element_rect(colour = "turquoise", fill = "turquoise")
   )
 ```
 
-Finally, to generate the final gif, use the `gg_playback()` function.
-The user can define: - where the final gif gets saved by setting the
+Finally, to generate the final GIF, use the `gg_playback()` function.
+The user can define: - where the final GIF gets saved by setting the
 `name` argument, - duration of the first and last images with
 `first_image_duration` or `last_image_duration` - delay between frames
 in seconds with `frame_duration`
 
 ``` r
 gg_playback(
-  name = file.path(tempdir(),"recording","vignette_gif.gif"),
-  first_image_duration = 8,
-  last_image_duration = 12,
-  frame_duration = .25
+  name = file.path(tempdir(), "recording", "vignette_gif.gif"),
+  first_image_duration = 5,
+  last_image_duration = 15,
+  frame_duration = .4,
+  image_resize = 800
 )
 ```
 
-Once rendering is complete, a gif is opened in your viewer.
+Once rendering is complete, a GIF is opened in your viewer.
 
-![](vignettes/vignette_gif.gif)
+![](man/figures/vignette_gif.gif)
+
+[^1]: In case you are saving to PDF, the file will automatically open in
+    your default PDF viewer.
+
+[^2]: A previous typo but actually it fits quite well.

@@ -2,9 +2,9 @@ url: ~
 template:
   bootstrap: 5
   bslib:
-    secondary: "#28A87D"
-    border-radius: 0.5rem
-    btn-border-radius: 0.25rem
+    primary: "#28A87D"
+    border-radius: 0.1rem
+    btn-border-radius: 0.75rem
 
 home:
   title: camcorder
@@ -21,8 +21,8 @@ authors:
   Cédric Scherer:
     href: https://cedricscherer.com
   footer:
-    roles: [cre, aut]
-    text: "{camcorder} is created and maintained by"
+    roles: [cre, ctb]
+    text: "{camcorder} is developed by"
   sidebar:
     roles: [aut, ctb]
 
@@ -30,3 +30,11 @@ navbar:
   right:
     - icon: fa-github fa-lg
       href: https://github.com/thebioengineer/camcorder
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - camcorder_record
+  - camcorder_view
+  - pdf_fonts
