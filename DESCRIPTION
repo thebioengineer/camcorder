@@ -48,6 +48,9 @@ Suggests:
     covr,
     testthat (>= 3.0.0),
     patchwork,
-    withr
+    withr,
+    dplyr,
+    systemfonts,
+    scales
 VignetteBuilder: knitr
 Config/testthat/edition: 3

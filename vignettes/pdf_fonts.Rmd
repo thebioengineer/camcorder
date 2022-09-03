@@ -55,7 +55,7 @@ You can simply filter this tibble for any font:[^f3]
 
 ```{r font-search}
 systemfonts::system_fonts() |> 
-  dplyr::filter(stringr::str_detect(family, "Dyna")) |>
+  dplyr::filter(grepl("Dyna", family)) |>
   dplyr::pull(name) |> 
   sort()
 ```
