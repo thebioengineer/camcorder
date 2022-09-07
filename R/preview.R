@@ -2,10 +2,7 @@
 #' @noRd
 preview_film <- function(){
 
-  records <- list.files(
-      path    = GG_RECORDING_ENV$recording_dir,
-      pattern = paste0("*.", GG_RECORDING_ENV$device_ext, "$")
-    )
+  records <- get_file_record()
 
   if (tolower(GG_RECORDING_ENV$device_ext) == "pdf") {
 
@@ -31,6 +28,20 @@ preview_film <- function(){
   }
 
   invisible()
+
+}
+
+#' get list of recorded files in recording dir
+get_file_record <- function(){
+
+  file_preview_ext <- paste0("[.]", GG_RECORDING_ENV$device_ext, "$")
+
+  file_preview_format <- "\\d{4}_\\d{2}_\\d{2}_\\d{2}_\\d{2}_\\d{2}[.]\\d+"
+
+  list.files(
+    path    = GG_RECORDING_ENV$recording_dir,
+    pattern = paste0("^",file_preview_format,file_preview_ext)
+  )
 
 }
 
