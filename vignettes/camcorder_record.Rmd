@@ -145,18 +145,6 @@ gg_resize_film(
 g
 ```
 
-```{r setup-record, eval=TRUE, echo=FALSE}
-```
-
-```{r style-diamonds-plot, eval=TRUE, echo=FALSE}
-```
-
-```{r resize, eval=TRUE, echo=FALSE}
-```
-
-```{r plot-new-width, eval=TRUE, echo=FALSE}
-```
-
 ## Create a GIF with `gg_playback()`
 
 Once we are happy with the visualization, we can create an animation using all the automatically saved plots:

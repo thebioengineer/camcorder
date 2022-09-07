@@ -51,6 +51,7 @@ Suggests:
     withr,
     dplyr,
     systemfonts,
-    scales
+    scales,
+    extrafont
 VignetteBuilder: knitr
 Config/testthat/edition: 3
