@@ -1,7 +1,7 @@
 Package: camcorder
 Type: Package
 Title: Record Your 'ggplot2' History
-Version: 0.0.3
+Version: 0.0.3.9000
 Authors@R: 
     c(
       person(
