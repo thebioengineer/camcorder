@@ -11,10 +11,13 @@ scale_film <- function(film, cassette, size = 600, background = "black") {
 
   if (missing(cassette)) {
     cassette <- file.path(GG_RECORDING_ENV$recording_dir, "resized")
-    if(!dir.exists(cassette)){
-      dir.create(cassette)
-    }
+
   }
+
+  if(!dir.exists(cassette)){
+      dir.create(cassette)
+  }
+
   image_ext <- file_ext(film[1])
 
   image_pattern <- paste0("_", size, "x", size, "_",background)
@@ -32,9 +35,6 @@ scale_film <- function(film, cassette, size = 600, background = "black") {
 
   film_to_resize <- film[!basename(file_path_sans_ext(film)) %in% basename(file_path_sans_ext(existing_resized_film))]
 
-
-
-
   q_lapply(film_to_resize, function(film_path) {
 
     base_image_name <- file_path_sans_ext(basename(film_path))
@@ -43,7 +43,7 @@ scale_film <- function(film, cassette, size = 600, background = "black") {
                       paste0(
                         paste0(
                           base_image_name,
-                          "_resize_",
+                          "_resize",
                           image_pattern
                         ),
                         ".",

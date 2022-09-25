@@ -3,5 +3,8 @@
 ^LICENSE\.md$
 ^\.github$
 inst/gif_samples/*
-readme.md
+README.Rmd
 ^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

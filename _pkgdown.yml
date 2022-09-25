@@ -1,0 +1,40 @@
+url: ~
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#28A87D"
+    border-radius: 0.1rem
+    btn-border-radius: 0.75rem
+
+home:
+  title: camcorder
+  description: >
+    `{camcorder}` is an an R package for s to track and record graphics generated
+    with `{ggplot2}` that are created across one or multiple sessions with the
+    eventual goal of creating a gif showing all the plots created sequentially.
+
+authors:
+  Ellis Hughes:
+    href: https://github.com/thebioengineer
+  Georgios Karamanis:
+    href: https://karaman.is
+  Cédric Scherer:
+    href: https://cedricscherer.com
+  footer:
+    roles: [cre, ctb]
+    text: "{camcorder} is developed by"
+  sidebar:
+    roles: [aut, ctb]
+
+navbar:
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/thebioengineer/camcorder
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - camcorder_record
+  - camcorder_view
+  - pdf_fonts
