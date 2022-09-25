@@ -20,6 +20,8 @@
 #'
 resize_image <- function(image, path, max_size = 600, background = "black") {
 
+
+
   if (missing(path)) {
     base_image_name <- tools::file_path_sans_ext(basename(image))
     image_ext <- tools::file_ext(image)
@@ -29,6 +31,7 @@ resize_image <- function(image, path, max_size = 600, background = "black") {
                           base_image_name,
                           "resize",
                           paste0(max_size, "x", max_size),
+                          background,
                           sep = "_"
                         ),
                         ".",

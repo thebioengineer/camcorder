@@ -149,6 +149,7 @@ gg_playback <-
 
     records <-
       scale_film(film = records,
+                 cassette = file.path(GG_RECORDING_ENV$recording_dir, "resized"),
                  size = image_resize,
                  background = background)
 
