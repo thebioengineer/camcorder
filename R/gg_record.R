@@ -35,10 +35,11 @@ gg_record <- function(dir = NULL,
                       scale = 1,
                       width = NA,
                       height = NA,
-                      units = c("in", "cm", "mm"),
+                      units = c("in", "cm", "mm","px"),
                       dpi = 300,
                       limitsize = TRUE,
-                      device_ext = NULL
+                      device_ext = NULL,
+                      bg = NULL
 ){
 
   if (is.null(dir)) {
@@ -87,6 +88,7 @@ gg_record <- function(dir = NULL,
   GG_RECORDING_ENV$image_units  <- units
   GG_RECORDING_ENV$image_dpi    <- dpi
   GG_RECORDING_ENV$scale        <- scale
+  GG_RECORDING_ENV$bg           <- bg
   GG_RECORDING_ENV$limitsize    <- limitsize
 
   GG_RECORDING_ENV$shims_registered <- FALSE
@@ -104,12 +106,15 @@ gg_record <- function(dir = NULL,
 #' @param last_image_duration n units of frame_duration to show the last image for
 #' @param frame_duration n seconds each plot should be shown
 #' @param image_resize size to rescale images to in pixels
-#' @param background color to set the background. A valid color string such as "navyblue" or
-#' "#000080". Use "none" for transparancy.
+#' @param background color to set the background of the gif. A valid color string such as "navyblue" or
+#' "#000080". Use "none" for transparancy. Does not impact the background of images.
 #' @param playback Boolean, should the recording start playing after it is
 #' turned into a gif? defaults to TRUE
 #' @param stoprecording Boolean, should the plots stop being recorded?
 #' defaults to TRUE.
+#'
+#' @param last_as_first Should the last plot be displayed at the beginning too?
+#'
 #' @inheritParams gifski::gifski
 #'
 #' @return Returns nothing. Used to generate the gif.
@@ -128,63 +133,67 @@ gg_playback <-
            height = NULL,
            progress = interactive(),
            playback = TRUE,
-           stoprecording = TRUE) {
+           stoprecording = FALSE,
+           last_as_first = TRUE,
+           ...) {
 
-    records <- list.files(
-      path    = GG_RECORDING_ENV$recording_dir,
-      pattern = paste0("*.", GG_RECORDING_ENV$device_ext, "$"),
-      full.names = TRUE
-    )
+    records <- get_file_records(full_path = TRUE)
 
     if (length(records) == 0) {
       warning("No images recorded to playback.")
-    } else{
-      stopifnot(last_image_duration > 0)
-      stopifnot(first_image_duration > 0)
-
-      records <-
-        scale_film(film = records,
-                   size = image_resize,
-                   background = background)
-
-      records <- c(
-        rep(records[1], times = first_image_duration),
-        records[-c(1, length(records))],
-        rep(records[length(records)], times = last_image_duration)
-      )
-
-      if (is.null(name)) {
-        recording <- paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".gif")
-        if (!GG_RECORDING_ENV$is_temp_dir) {
-          recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
-        }
-      } else{
-        recording <- name
-      }
-
-      ## make gif via gifski
-      gifski(
-        png_files = records,
-        gif_file = recording,
-        delay = frame_duration,
-        width = ifelse(is.null(width), image_resize, width),
-        height = ifelse(is.null(height), image_resize, width),
-        progress = progress
-      )
-
-      viewer <- getOption("viewer", utils::browseURL)
-
-      if (is.function(viewer) &&
-          length(recording) > 0 && playback && interactive()) {
-        viewer(recording)
-      }
+      invisible()
     }
+
+    stopifnot(last_image_duration > 0)
+    stopifnot(first_image_duration > 0)
+
+    records <-
+      scale_film(film = records,
+                 size = image_resize,
+                 background = background)
+
+    if(last_as_first){
+      records <- c(records[length(records)], records)
+    }
+
+    records <- c(
+      rep(records[1], times = first_image_duration),
+      records[-c(1, length(records))],
+      rep(records[length(records)], times = last_image_duration)
+    )
+
+    if (is.null(name)) {
+      recording <- paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".gif")
+      if (!GG_RECORDING_ENV$is_temp_dir) {
+        recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
+      }
+    } else{
+      recording <- name
+    }
+
+    ## make gif via gifski
+    gifski(
+      png_files = records,
+      gif_file = recording,
+      delay = frame_duration,
+      width = ifelse(is.null(width), image_resize, width),
+      height = ifelse(is.null(height), image_resize, height),
+      progress = progress
+    )
+
+    viewer <- getOption("viewer", utils::browseURL)
+
+    if (is.function(viewer) &&
+        length(recording) > 0 && playback && interactive()) {
+      viewer(recording)
+    }
+
     ## revert ggplot printing to standard printing
     if (stoprecording) {
       detach_camcorder_shims()
     }
 
-    invisible()
+    invisible(name)
 
   }
 
@@ -206,6 +215,7 @@ gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA){
     GG_RECORDING_ENV$image_width <- width
   }
   if(!is.na(units)){
+    units <- match.arg(units,choices = c("in", "cm", "mm","px"))
     GG_RECORDING_ENV$image_units <- units
   }
   if(!is.na(dpi)){

@@ -29,7 +29,8 @@ record_ggplot <- function(x, ...) {
       height = GG_RECORDING_ENV$image_height,
       units = GG_RECORDING_ENV$image_units,
       dpi = GG_RECORDING_ENV$image_dpi,
-      limitsize = GG_RECORDING_ENV$limitsize
+      limitsize = GG_RECORDING_ENV$limitsize,
+      bg = GG_RECORDING_ENV$bg
     )
   })
 
@@ -49,10 +50,6 @@ record_patchwork <- function(x,...) {
         ".",
         GG_RECORDING_ENV$device_ext
       ))
-
-    z <- capture.output({
-
-    })
 
     registerS3method(
       genname = "print",
@@ -80,7 +77,8 @@ record_patchwork <- function(x,...) {
         height = GG_RECORDING_ENV$image_height,
         units = GG_RECORDING_ENV$image_units,
         dpi = GG_RECORDING_ENV$image_dpi,
-        limitsize = GG_RECORDING_ENV$limitsize
+        limitsize = GG_RECORDING_ENV$limitsize,
+        bg = GG_RECORDING_ENV$bg
       )
     })
 
@@ -121,37 +119,50 @@ record_polaroid <- function(){
     file.path(GG_RECORDING_ENV$recording_dir, paste0(
       format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
       ".",
-      GG_RECORDING_ENV$device
+      GG_RECORDING_ENV$device_ext
     ))
+
   suppressMessages({
 
-  dev <- plot_dev(plot_file, dpi = GG_RECORDING_ENV$image_dpi)
+    dev <- plot_dev(GG_RECORDING_ENV$device, plot_file, dpi = GG_RECORDING_ENV$image_dpi)
 
-  dim <- plot_dim(
-    c(GG_RECORDING_ENV$image_width, GG_RECORDING_ENV$image_height),
-    scale = GG_RECORDING_ENV$scale,
-    units = GG_RECORDING_ENV$image_units,
-    limitsize = GG_RECORDING_ENV$limitsize,
-    dpi = GG_RECORDING_ENV$image_dpi
-  )
-
+    dim <- plot_dim(
+      c(GG_RECORDING_ENV$image_width, GG_RECORDING_ENV$image_height),
+      scale = GG_RECORDING_ENV$scale,
+      units = GG_RECORDING_ENV$image_units,
+      limitsize = GG_RECORDING_ENV$limitsize,
+      dpi = GG_RECORDING_ENV$image_dpi
+    )
 
     capture.output({
+
       old_dev <- dev.cur()
 
       dev.copy(dev,
                filename = plot_file,
                width = dim[1],
-               height = dim[2])
+               height = dim[2],
+               bg = GG_RECORDING_ENV$bg %||% "transparent"
+               )
 
-      dev.off()
-      if (old_dev > 1)
+      dev.off(which = )
+      if (old_dev > 1){
         dev.set(old_dev)
+      }
+
     })
   })
 
   preview_film()
 
+}
+
+`%||%`<- function(x,y){
+  if(is.null(x)){
+    y
+  }else{
+    x
+  }
 }
 
 # copied from ggplot2 internal plot_dim function
@@ -189,9 +200,28 @@ plot_dim <- function(dim = c(NA, NA),
 # copied from ggplot2 internal plot_dev function
 #' @importFrom svglite svglite
 #' @importFrom tools file_ext
-plot_dev <- function (filename = NULL, dpi = 300) {
+#' @importFrom utils modifyList
+plot_dev <- function (device, filename = NULL, dpi = 300) {
+
   force(filename)
   force(dpi)
+
+  if (is.function(device)) {
+    args <- formals(device)
+    call_args <- list()
+    if ("file" %in% names(args)) {
+      call_args$file <- filename
+    }
+    if ("res" %in% names(args)) {
+      call_args$res <- dpi
+    }
+    if ("units" %in% names(args)) {
+      call_args$units <- "in"
+    }
+    dev <- function(...) do.call(device, modifyList(list(...),
+                                                     call_args))
+    return(dev)
+  }
 
   eps <- function(filename, ...) {
     grDevices::postscript(file = filename, ..., onefile = FALSE,
@@ -199,14 +229,15 @@ plot_dev <- function (filename = NULL, dpi = 300) {
   }
 
   if (requireNamespace("ragg", quietly = TRUE)) {
-    png_dev <-  ragg::agg_png
-    jpeg_dev <- ragg::agg_jpeg
-    tiff_dev <- ragg::agg_tiff
+    png_dev <-  pass_bg(ragg::agg_png)
+    jpeg_dev <- pass_bg(ragg::agg_jpeg)
+    tiff_dev <- pass_bg(ragg::agg_tiff)
   } else {
     png_dev <- grDevices::png
     jpeg_dev <- grDevices::jpeg
     tiff_dev <- grDevices::tiff
   }
+
   devices <- list(eps = eps, ps = eps,
                   tex = function(filename, ...) grDevices::pictex(file = filename, ...),
                   pdf = function(filename, ..., version = "1.4") grDevices::pdf(file = filename, ..., version = version),
@@ -231,3 +262,12 @@ plot_dev <- function (filename = NULL, dpi = 300) {
   dev
 }
 
+pass_bg <- function(device){
+  function(...,bg){
+    if(!is.null(bg)){
+      device(..., bg = bg)
+    }else{
+      device(...)
+    }
+  }
+}

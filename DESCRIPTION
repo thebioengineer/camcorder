@@ -27,7 +27,7 @@ Description: Record and generate a gif of your R sessions plots that were create
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Imports: 
     ggplot2,
     gifski,
