@@ -19,7 +19,7 @@ test_that("records of files works", {
   Sys.sleep(.1)
   record_ggplot(mtcars_plot)
 
-  records <- get_file_record()
+  records <- get_file_records()
 
   expect_equal(length(records), 3)
 
@@ -55,7 +55,7 @@ test_that("records of files ignores extra files", {
     device = png
   )})
 
-  records <- get_file_record()
+  records <- get_file_records()
 
   expect_equal(length(records), 3)
 

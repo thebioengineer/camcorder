@@ -25,8 +25,7 @@ The main purpose of `{camcorder}` is the recording of all steps involved in a da
 
 We initialize a recording with the `gg_record()` function. After running the following code, `{camcorder}` is *saving a file with the given specifications in the given directory every time `ggplot()` is called*.
 
-```{r setup-record, eval=FALSE}
-library(ggplot2)
+```{r setup-record, eval=TRUE}
 library(camcorder)
 
 gg_record(
@@ -149,7 +148,7 @@ g
 
 Once we are happy with the visualization, we can create an animation using all the automatically saved plots:
 
-```{r playback}
+```{r playback, eval = FALSE}
 gg_playback(
   name = file.path(tempdir(), "recording", "diamonds.gif"),
   first_image_duration = 4,
