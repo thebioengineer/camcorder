@@ -29,6 +29,7 @@ test_that("recording a basic ggplot works", {
   skip_on_ci()
 
   file.rename(list.files(rec_dir,full.names = TRUE),file.path(tempdir(),"camcorder_preview_ggplot2.png"))
+
   expect_snapshot_file(
     path = file.path(tempdir(),"camcorder_preview_ggplot2.png")
   )

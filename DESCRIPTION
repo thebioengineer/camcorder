@@ -11,15 +11,15 @@ Authors@R:
         role = c("aut", "cre")
       ),
       person(
-        given = "Georgios", 
-        family = "Karamanis", 
-        email = "georgios@karaman.is", 
-        role = c("ctb")
-      ),
-      person(
         given = "Cédric", 
         family = "Scherer", 
         email = "cedricphilippscherer@gmail.com", 
+        role = c("ctb")
+      ),
+      person(
+        given = "Georgios", 
+        family = "Karamanis", 
+        email = "georgios@karaman.is", 
         role = c("ctb")
       )
     )
@@ -48,6 +48,10 @@ Suggests:
     covr,
     testthat (>= 3.0.0),
     patchwork,
-    withr
+    withr,
+    dplyr,
+    systemfonts,
+    scales,
+    extrafont
 VignetteBuilder: knitr
 Config/testthat/edition: 3
