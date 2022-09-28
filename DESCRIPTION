@@ -33,7 +33,6 @@ Imports:
     gifski,
     tools,
     magick,
-    pdftools,
     rsvg,
     jsonlite,
     rlang,
