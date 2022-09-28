@@ -1,7 +1,7 @@
 Package: camcorder
 Type: Package
-Title: Record Your 'ggplot2' History
-Version: 0.0.3.9000
+Title: Record Your Plot History
+Version: 0.1.0
 Authors@R: 
     c(
       person(
@@ -23,7 +23,7 @@ Authors@R:
         role = c("ctb")
       )
     )
-Description: Record and generate a gif of your R sessions plots that were created using 'ggplot2'.
+Description: Record and generate a gif of your R sessions plots.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
