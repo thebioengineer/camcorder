@@ -2,6 +2,8 @@ pandoc: 2.14.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
-  camcorder: camcorder.html
-last_built: 2022-08-21T20:00Z
+  camcorder_record: camcorder_record.html
+  camcorder_view: camcorder_view.html
+  pdf_fonts: pdf_fonts.html
+last_built: 2022-09-28T23:48Z
 

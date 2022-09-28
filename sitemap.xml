@@ -10,10 +10,16 @@
     <loc>/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/articles/camcorder.html</loc>
+    <loc>/articles/camcorder_record.html</loc>
+  </url>
+  <url>
+    <loc>/articles/camcorder_view.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>/articles/pdf_fonts.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
