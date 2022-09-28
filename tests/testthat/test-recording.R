@@ -29,6 +29,7 @@ test_that("recording a basic ggplot works", {
   skip_on_ci()
 
   file.rename(list.files(rec_dir,full.names = TRUE),file.path(tempdir(),"camcorder_preview_ggplot2.png"))
+
   expect_snapshot_file(
     path = file.path(tempdir(),"camcorder_preview_ggplot2.png")
   )
@@ -86,9 +87,13 @@ test_that("recording a basic graphic devices works", {
   gg_record(dir = rec_dir)
   on.exit(gg_stop_recording())
 
+  png(filename = tempfile(fileext = ".png"))
+
   plot(1:5)
 
   record_polaroid()
+
+  dev.off()
 
   ## Recording created directory
   expect_true(dir.exists(rec_dir))
@@ -127,12 +132,12 @@ test_that("recording works - gif output", {
                   ggplot2::scale_x_discrete(labels = c("4 CYL","6 CYL","8 CYL"))
   )
 
+
+
   playback_file <- file.path(tempdir(),"camcorder_playback.gif")
   gg_playback(playback_file)
 
-  expect_snapshot_file(
-    path = playback_file
-  )
+  expect_true(file.exists(playback_file))
 
 })
 
@@ -152,11 +157,11 @@ test_that("resizing a plot works", {
 
   record_ggplot(mtcars_plot)
 
-  gg_resize_film(height = 10, width = 10, units = "in")
+  mtcars_plot <- gg_resize_film(height = 10, width = 5, units = "in")
 
   ##re-record with larger size. gg_resize_film prints and thus would record
   ##automatically normally
-  record_ggplot(mtcars_plot$last_plot)
+  record_ggplot(mtcars_plot)
 
   ## Recording created directory
   expect_true(dir.exists(rec_dir))
@@ -171,7 +176,7 @@ test_that("resizing a plot works", {
 
   expect_equal(
     image_sizes,
-    c("500 x 500", "1000 x 1000")
+    c("500 x 500", "500 x 1000")
   )
 
 })

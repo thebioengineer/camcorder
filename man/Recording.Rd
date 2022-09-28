@@ -13,10 +13,11 @@ gg_record(
   scale = 1,
   width = NA,
   height = NA,
-  units = c("in", "cm", "mm"),
+  units = c("in", "cm", "mm", "px"),
   dpi = 300,
   limitsize = TRUE,
-  device_ext = NULL
+  device_ext = NULL,
+  bg = NULL
 )
 
 gg_playback(
@@ -31,7 +32,9 @@ gg_playback(
   height = NULL,
   progress = interactive(),
   playback = TRUE,
-  stoprecording = TRUE
+  stoprecording = FALSE,
+  last_as_first = TRUE,
+  ...
 )
 
 gg_resize_film(height = NA, width = NA, units = NA, dpi = NA)
@@ -46,13 +49,7 @@ one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".}
 
 \item{scale}{Multiplicative scaling factor.}
 
-\item{width}{Plot size in \code{units} ("in", "cm", "mm", or "px").
-If not supplied, uses the size of current graphics device.}
-
-\item{height}{Plot size in \code{units} ("in", "cm", "mm", or "px").
-If not supplied, uses the size of current graphics device.}
-
-\item{units}{Plot size in \code{units} ("in", "cm", "mm", or "px").
+\item{width, height, units}{Plot size in \code{units} ("in", "cm", "mm", or "px").
 If not supplied, uses the size of current graphics device.}
 
 \item{dpi}{Plot resolution. Also accepts a string input: "retina" (320),
@@ -63,6 +60,9 @@ save images larger than 50x50 inches, to prevent the common error of
 specifying dimensions in pixels.}
 
 \item{device_ext}{file extension to use for images created. Does not usually need to be populated manually.}
+
+\item{bg}{Background colour. If \code{NULL}, uses the \code{plot.background} fill value
+from the plot theme.}
 
 \item{name}{name of gif}
 
@@ -77,8 +77,8 @@ once, or a number to indicate how many times to repeat after the first.}
 
 \item{image_resize}{size to rescale images to in pixels}
 
-\item{background}{color to set the background. A valid color string such as "navyblue" or
-"#000080". Use "none" for transparancy.}
+\item{background}{color to set the background of the gif. A valid color string such as "navyblue" or
+"#000080". Use "none" for transparancy. Does not impact the background of images.}
 
 \item{progress}{print some verbose status output}
 
@@ -87,6 +87,11 @@ turned into a gif? defaults to TRUE}
 
 \item{stoprecording}{Boolean, should the plots stop being recorded?
 defaults to TRUE.}
+
+\item{last_as_first}{Should the last plot be displayed at the beginning too?}
+
+\item{...}{Other arguments passed on to the graphics device function,
+as specified by \code{device}.}
 }
 \value{
 Used initialize recording, nothing returned
@@ -107,13 +112,13 @@ Stop recording images with {camcorder}.
 }
 \section{Functions}{
 \itemize{
-\item \code{gg_playback}: 
+\item \code{gg_playback()}: 
 
-\item \code{gg_resize_film}: 
+\item \code{gg_resize_film()}: 
 
-\item \code{gg_stop_recording}: 
+\item \code{gg_stop_recording()}: 
+
 }}
-
 \examples{
  if(require(ggplot2) & interactive()){
   gg_record(dir = file.path(tempdir(),"recording"))
