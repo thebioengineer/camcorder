@@ -13,3 +13,7 @@
 ## Downstream dependencies
 
 There are currently no downstream dependencies on this package as it is the first CRAN submission
+
+## Notes
+
+Resubmission removing large gif files to make submission <5mb
