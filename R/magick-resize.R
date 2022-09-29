@@ -13,7 +13,6 @@
 #'
 #' @importFrom magick image_read image_info image_resize image_extent image_write
 #' @importFrom tools file_path_sans_ext file_ext
-#' @import pdftools
 #' @import rsvg
 #'
 #' @noRd
