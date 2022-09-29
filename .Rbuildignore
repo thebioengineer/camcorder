@@ -10,3 +10,6 @@ README.Rmd
 ^pkgdown$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+man/figures/cscherer_coffee_ratings\.gif
+man/figures/gkaramanis_tour_de_france\.gif
+man/figures/vignette_gif\.gif
