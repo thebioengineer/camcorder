@@ -47,6 +47,7 @@ Suggests:
     covr,
     testthat (>= 3.0.0),
     patchwork,
+    withr,
     dplyr,
     systemfonts,
     scales,
