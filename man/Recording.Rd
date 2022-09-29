@@ -78,7 +78,7 @@ once, or a number to indicate how many times to repeat after the first.}
 \item{image_resize}{size to rescale images to in pixels}
 
 \item{background}{color to set the background of the gif. A valid color string such as "navyblue" or
-"#000080". Use "none" for transparancy. Does not impact the background of images.}
+"#000080". Use "none" for transparency. Does not impact the background of images.}
 
 \item{progress}{print some verbose status output}
 
