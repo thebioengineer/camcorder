@@ -6,6 +6,10 @@
 \usage{
 record_polaroid()
 }
+\value{
+No return value. Used for the side effect of capturing the current
+  graphics device and saving it to the set directory from gg_record.
+}
 \description{
 For plot types that don't have a special print method, use this
 function to capture what has been printed to the current graphics device and

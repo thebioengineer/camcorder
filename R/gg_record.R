@@ -1,11 +1,12 @@
 #' @title Record and generate plot histories
 #'
-#' @description Record plots created over time and generate a gif of the plots
-#'    made in the R session.
+#' @description Record plots created over time and generate a GIF of the plots
+#'    made in the 'R' session. Overrides the print methods for ggplot and patchwork objects
+#'    from the 'ggplot2' and 'patchwork' packages respectively.
 #'
 #' @rdname Recording
 #'
-#' @param dir directory to save the intermediate plots in
+#' @param dir directory to save the intermediate plots in. Defaults to a temporary directory
 #' @param device Device to use. Can either be a device function (e.g. png()), or
 #'     one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".
 #' @param device_ext file extension to use for images created. Does not usually need to be populated manually.
@@ -165,9 +166,7 @@ gg_playback <-
 
     if (is.null(name)) {
       recording <- paste0(format(Sys.time(), "%Y_%m_%d_%H_%M_%S"), ".gif")
-      if (!GG_RECORDING_ENV$is_temp_dir) {
-        recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
-      }
+      recording <- file.path(GG_RECORDING_ENV$recording_dir, recording)
     } else{
       recording <- name
     }

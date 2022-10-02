@@ -17,3 +17,5 @@ There are currently no downstream dependencies on this package as it is the firs
 ## Notes
 
 Resubmission removing large gif files to make submission <5mb
+Updates to documentation including adding the "value" param for record_polaroid,
+and wrapping packages and API's in single quotes.

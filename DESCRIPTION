@@ -24,7 +24,11 @@ Authors@R:
         role = c("ctb")
       )
     )
-Description: Record and generate a gif of your R sessions plots.
+Description: Record and generate a 'gif' of your 'R' sessions plots. When creating 
+    a visualization, there is inevitably iteration and refinement that occurs. 
+    Automatically save the plots made to a specified directory, previewing them 
+    as they would be saved. Then combine all plots generated into a 'gif'
+    to show the plot refinement over time.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

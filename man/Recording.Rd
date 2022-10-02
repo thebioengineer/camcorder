@@ -42,7 +42,7 @@ gg_resize_film(height = NA, width = NA, units = NA, dpi = NA)
 gg_stop_recording()
 }
 \arguments{
-\item{dir}{directory to save the intermediate plots in}
+\item{dir}{directory to save the intermediate plots in. Defaults to a temporary directory}
 
 \item{device}{Device to use. Can either be a device function (e.g. png()), or
 one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".}
@@ -103,8 +103,9 @@ Returns the last plot generated, resized to new dimensions
 Returns nothing. used for side effect.
 }
 \description{
-Record plots created over time and generate a gif of the plots
-   made in the R session.
+Record plots created over time and generate a GIF of the plots
+   made in the 'R' session. Overrides the print methods for ggplot and patchwork objects
+   from the 'ggplot2' and 'patchwork' packages respectively.
 
 resize the film for recording, reprints and saves last plot
 

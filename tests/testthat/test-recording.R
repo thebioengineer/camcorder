@@ -143,6 +143,8 @@ test_that("recording works - gif output", {
 
 test_that("resizing a plot works", {
 
+  skip_on_cran()
+
   rec_dir <- file.path(tempdir(),"camcorder_tests_resizing")
 
   if(dir.exists(rec_dir)){
