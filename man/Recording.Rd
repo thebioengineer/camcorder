@@ -42,7 +42,7 @@ gg_resize_film(height = NA, width = NA, units = NA, dpi = NA)
 gg_stop_recording()
 }
 \arguments{
-\item{dir}{directory to save the intermediate plots in}
+\item{dir}{directory to save the intermediate plots in. Defaults to a temporary directory}
 
 \item{device}{Device to use. Can either be a device function (e.g. png()), or
 one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".}
@@ -78,7 +78,7 @@ once, or a number to indicate how many times to repeat after the first.}
 \item{image_resize}{size to rescale images to in pixels}
 
 \item{background}{color to set the background of the gif. A valid color string such as "navyblue" or
-"#000080". Use "none" for transparancy. Does not impact the background of images.}
+"#000080". Use "none" for transparency. Does not impact the background of images.}
 
 \item{progress}{print some verbose status output}
 
@@ -103,8 +103,9 @@ Returns the last plot generated, resized to new dimensions
 Returns nothing. used for side effect.
 }
 \description{
-Record plots created over time and generate a gif of the plots
-   made in the R session.
+Record plots created over time and generate a GIF of the plots
+   made in the 'R' session. Overrides the print methods for ggplot and patchwork objects
+   from the 'ggplot2' and 'patchwork' packages respectively.
 
 resize the film for recording, reprints and saves last plot
 

@@ -95,6 +95,9 @@ record_patchwork <- function(x,...) {
 #' function to capture what has been printed to the current graphics device and
 #' save it using the current camcorder settings
 #'
+#' @returns No return value. Used for the side effect of capturing the current
+#'   graphics device and saving it to the set directory from gg_record.
+#'
 #' @examples
 #'
 #' library(grid)

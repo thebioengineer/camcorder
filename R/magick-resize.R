@@ -8,7 +8,7 @@
 #' @param output path to save resized image
 #' @param max_size set maximum height/width of the image in pixels
 #' @param background color to set the background. A valid color string such as "navyblue" or
-#' "#000080". Use "none" for transparancy.
+#' "#000080". Use "none" for transparency.
 #' @return Nothing. Used to resize images on the file system.
 #'
 #' @importFrom magick image_read image_info image_resize image_extent image_write
