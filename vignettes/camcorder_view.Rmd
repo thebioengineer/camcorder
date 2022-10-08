@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
-There a other pretty cool features when recording your ggplot output with the `{camcorder}` that improve the workflow with `{ggplot2}`: 
+There are other pretty cool features when recording your ggplot output with the `{camcorder}` that improve the workflow with `{ggplot2}`: 
 
 1.  you don't need to run `ggsave()` every time after your `ggplot()` call
 2.  you can inspect the plot in the given dimensions **inside** the RStudio IDE
