@@ -26,11 +26,13 @@ After installation, the package enables you to:
 
 ## Installation
 
-Currently {camcorder} is only available on GitHub, and can be installed
-using the following command.
+``` r
+install.packages("camcorder")
+```
+
+### Or the development version
 
 ``` r
-# install.packages("camcorder")
 remotes::install_github("thebioengineer/camcorder")
 ```
 
