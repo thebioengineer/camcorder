@@ -26,11 +26,15 @@ After installation, the package enables you to:
 
 ## Installation
 
-Currently {camcorder} is only available on GitHub, and can be installed
-using the following command.
+{camcorder} can be installed from CRAN:
 
 ``` r
-# install.packages("camcorder")
+install.packages("camcorder")
+```
+
+Alternatively, you can install the development version:
+
+```r
 remotes::install_github("thebioengineer/camcorder")
 ```
 
