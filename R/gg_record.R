@@ -103,7 +103,7 @@ gg_record <- function(dir = NULL,
 #' @describeIn Recording
 #'
 #' @param name name of gif
-#' @param first_image_duration n units of frame_duration to show the last image for
+#' @param first_image_duration n units of frame_duration to show the first image for
 #' @param last_image_duration n units of frame_duration to show the last image for
 #' @param frame_duration n seconds each plot should be shown
 #' @param image_resize size to rescale images to in pixels
