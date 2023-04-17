@@ -10,7 +10,8 @@
 #' @param device Device to use. Can either be a device function (e.g. png()), or
 #'     one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".
 #' @param device_ext file extension to use for images created. Does not usually need to be populated manually.
-#' @param filename_pattern Pattern to use when naming the interim files  a filename
+#' @param filename_pattern Pattern to use when naming the interim files. Must use one of the
+#'     reserved camcorder iterators: {timestamp},{i}
 #' @inheritParams ggplot2::ggsave
 #'
 #'

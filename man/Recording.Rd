@@ -65,7 +65,8 @@ specifying dimensions in pixels.}
 \item{bg}{Background colour. If \code{NULL}, uses the \code{plot.background} fill value
 from the plot theme.}
 
-\item{filename_pattern}{Pattern to use when naming the interim files  a filename}
+\item{filename_pattern}{Pattern to use when naming the interim files. Must use one of the
+reserved camcorder iterators: {timestamp},{i}}
 
 \item{name}{name of gif}
 
