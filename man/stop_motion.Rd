@@ -31,7 +31,7 @@ slickR and htmltools must be installed for this function to operate.
 
 if(require(ggplot2) & interactive()){
 
-  gg_record(dir = file.path(tempdir(),"recording"))
+  gg_record(dir = file.path(tempdir(),"recording"), device = "pdf" )
   ggplot(data.frame(x = 1, y = 1), aes(x=x, y=y)) + geom_point() + ylim(0,4)
   ggplot(data.frame(x = 1, y = 2), aes(x=x, y=y)) + geom_point() + ylim(0,4)
 

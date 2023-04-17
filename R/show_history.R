@@ -15,7 +15,7 @@
 #'
 #' if(require(ggplot2) & interactive()){
 #'
-#'   gg_record(dir = file.path(tempdir(),"recording"))
+#'   gg_record(dir = file.path(tempdir(),"recording"), device = "png" )
 #'   ggplot(data.frame(x = 1, y = 1), aes(x=x, y=y)) + geom_point() + ylim(0,4)
 #'   ggplot(data.frame(x = 1, y = 2), aes(x=x, y=y)) + geom_point() + ylim(0,4)
 #'
@@ -29,6 +29,7 @@
 #'
 #'
 #' @importFrom rlang check_installed
+#' @importFrom slickR slickR settings %synch%
 stop_motion <- function(height = 500, dir = GG_RECORDING_ENV$recording_dir, ext = GG_RECORDING_ENV$device_ext){
 
   if(is.null(dir)){
@@ -49,25 +50,79 @@ stop_motion <- function(height = 500, dir = GG_RECORDING_ENV$recording_dir, ext 
   records <- get_file_records(full_path = TRUE, path = dir, ext = ext %||% "(png)|(pdf)|(jpeg)|(bmp)|(tiff)|(emf)|(svg)|(eps)|(ps)")
 
   slick_content <- lapply(records, function(image_path, img_height){
-    b64 <- read_image_b64(image_path)
-    htmltools::tags$div(
-      htmltools::tags$img(src = b64,
+    img_ext <- tools::file_ext(image_path)
+    if(img_ext%in% c("tif", "emf", "eps", "ps")){
+      img_tag <- htmltools::tags$img(src = read_image_b64(image_path),
                           style = paste0(
                             "max-height:100%;",
                             "width:auto;height:auto;",
                             "margin-left: auto; margin-right: auto;",
-                            "vertical-align:middle;")
-                          )
-    ,
-    style = paste0("margin-left:auto;margin-right:auto;width:fit-content;height:",img_height,"px;")
+                            "vertical-align:middle;"))
+    }else if( img_ext %in% c("pdf")){
+
+      img_tag <- htmltools::tags$img(src = pdf_to_png(image_path),
+                                     style = paste0(
+                                       "max-height:100%;",
+                                       "width:auto;height:auto;",
+                                       "margin-left: auto; margin-right: auto;",
+                                       "vertical-align:middle;"))
+    }else{
+
+      img_tag <- htmltools::tags$img(src = image_path,
+                          style = paste0(
+                            "max-height:100%;",
+                            "width:auto;height:auto;",
+                            "margin-left: auto; margin-right: auto;",
+                            "vertical-align:middle;"))
+    }
+    htmltools::tags$div(
+      img_tag,style = paste0("margin-left:auto;margin-right:auto;width:fit-content;height:",img_height,"px;")
     )
   }, img_height = height)
 
-  slick_carousel <- slickR::slickR(slick_content, height = height, width = "95%") +
-    slickR::settings(
-      slidesToShow = 1,
-      infinite = TRUE
+  slick_carousel <- (
+    slickR::slickR(
+      slick_content,
+      height = height,
+      width = "95%") +
+      slickR::settings(infinite = TRUE)
+  ) %synch% (
+    slickR::slickR(
+      slick_content,
+      height = 50) +
+      slickR::settings(
+        arrows = FALSE,
+        slidesToShow = 3,
+        slidesToScroll = 1,
+        centerMode = TRUE,
+        focusOnSelect = TRUE,
+        initialSlide = 0,
+        infinite = TRUE
+      )
   )
 
   return(slick_carousel)
+}
+
+pdf_to_png <- function(pdf_path, path = tempdir()){
+
+  pdf_name <- basename(pdf_path)
+  pdf_name_sans_ext <- file_path_sans_ext(pdf_name)
+
+  png_path <- normalizePath(
+    file.path(path, paste0(pdf_name_sans_ext,".png")),
+    winslash = "/"
+  )
+
+  if(!file.exists(png_path)){
+    pdftools::pdf_convert(
+      pdf = pdf_path,
+      format = 'png',
+      verbose = FALSE,
+      filenames = png_path
+      )
+  }
+
+  return(png_path)
+
 }
