@@ -10,7 +10,7 @@ coverage](https://codecov.io/gh/thebioengineer/camcorder/branch/main/graph/badge
 [![R-CMD-check](https://github.com/thebioengineer/camcorder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/thebioengineer/camcorder/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`{camcorder}` is an an R package to track and automatically save
+`{camcorder}` is an R package to track and automatically save
 graphics generated with `{ggplot2}` that are created across one or
 multiple sessions with the eventual goal of creating a GIF showing all
 the plots saved sequentially during the design process.
@@ -26,11 +26,15 @@ After installation, the package enables you to:
 
 ## Installation
 
-Currently {camcorder} is only available on GitHub, and can be installed
-using the following command.
+{camcorder} can be installed from CRAN:
 
 ``` r
-# install.packages("camcorder")
+install.packages("camcorder")
+```
+
+Alternatively, you can install the development version:
+
+```r
 remotes::install_github("thebioengineer/camcorder")
 ```
 

@@ -68,18 +68,18 @@ from the plot theme.}
 \item{filename_pattern}{Pattern to use when naming the interim files. Must use one of the
 reserved camcorder iterators: {timestamp},{i}}
 
-\item{name}{name of gif}
+\item{name}{name of gif.}
 
-\item{first_image_duration}{n units of frame_duration to show the last image for}
+\item{first_image_duration}{n units of frame_duration to show the first image for.}
 
-\item{last_image_duration}{n units of frame_duration to show the last image for}
+\item{last_image_duration}{n units of frame_duration to show the last image for.}
 
-\item{frame_duration}{n seconds each plot should be shown}
+\item{frame_duration}{n seconds each plot should be shown.}
 
 \item{loop}{if the gif should be repeated. Set to FALSE to only play
 once, or a number to indicate how many times to repeat after the first.}
 
-\item{image_resize}{size to rescale images to in pixels}
+\item{image_resize}{size to rescale images to in pixels.}
 
 \item{background}{color to set the background of the gif. A valid color string such as "navyblue" or
 "#000080". Use "none" for transparency. Does not impact the background of images.}
@@ -87,7 +87,7 @@ once, or a number to indicate how many times to repeat after the first.}
 \item{progress}{print some verbose status output}
 
 \item{playback}{Boolean, should the recording start playing after it is
-turned into a gif? defaults to TRUE}
+turned into a gif? defaults to TRUE.}
 
 \item{stoprecording}{Boolean, should the plots stop being recorded?
 defaults to TRUE.}

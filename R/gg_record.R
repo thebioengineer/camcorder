@@ -120,15 +120,15 @@ gg_record <- function(dir = NULL,
 
 #' @describeIn Recording
 #'
-#' @param name name of gif
-#' @param first_image_duration n units of frame_duration to show the last image for
-#' @param last_image_duration n units of frame_duration to show the last image for
-#' @param frame_duration n seconds each plot should be shown
-#' @param image_resize size to rescale images to in pixels
+#' @param name name of gif.
+#' @param first_image_duration n units of frame_duration to show the first image for.
+#' @param last_image_duration n units of frame_duration to show the last image for.
+#' @param frame_duration n seconds each plot should be shown.
+#' @param image_resize size to rescale images to in pixels.
 #' @param background color to set the background of the gif. A valid color string such as "navyblue" or
 #' "#000080". Use "none" for transparency. Does not impact the background of images.
 #' @param playback Boolean, should the recording start playing after it is
-#' turned into a gif? defaults to TRUE
+#' turned into a gif? defaults to TRUE.
 #' @param stoprecording Boolean, should the plots stop being recorded?
 #' defaults to TRUE.
 #'
