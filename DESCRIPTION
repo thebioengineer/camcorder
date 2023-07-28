@@ -36,13 +36,16 @@ RoxygenNote: 7.2.1
 Imports: 
     ggplot2,
     gifski,
+    grid,
+    gt,
     tools,
     magick,
     rsvg,
     jsonlite,
     rlang,
     grDevices,
-    svglite
+    svglite,
+    webshot2
 Suggests: 
     knitr,
     rmarkdown,
