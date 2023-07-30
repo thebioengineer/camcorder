@@ -137,3 +137,71 @@ test_that("recording gt works - gif output", {
 
   })
 })
+
+test_that("recording gt and ggplot together works - gif output", {
+
+  skip_on_ci()
+
+  withr::with_package("gt",code = {
+
+    rec_dir <- file.path(tempdir(),"camcorder_tests_gt_ggplot")
+
+    if(dir.exists(rec_dir)){
+      unlink(rec_dir,recursive = TRUE)
+    }
+
+    gg_record(dir = rec_dir)
+    on.exit(gg_stop_recording())
+
+    # 1)
+    gt_1 <- gt::gt(ggplot2::diamonds) |>
+      gt_preview()
+    record_gt(gt_1)
+    # 2)
+    gt_2 <- gt::gt(ggplot2::diamonds) |>
+      gt::gt_preview() |>
+      gt::cols_hide(-c(cut, price))
+    record_gt(gt_2)
+    # 3)
+    gt_3 <- aggregate(ggplot2::diamonds, price ~ cut, "mean") |>
+      gt::gt() |>
+      gt::cols_label(price = "average price")
+    record_gt(gt_3)
+    # 4)
+    ggplot_1 <- aggregate(ggplot2::diamonds, price ~ cut, "mean") |>
+      ggplot2::ggplot(ggplot2::aes(cut, price)) +
+      ggplot2::geom_col(
+        ggplot2::aes(fill = ifelse(grepl("Good", cut), "salmon", "grey35")),
+        show.legend = FALSE
+      ) +
+      ggplot2::scale_fill_identity()
+    record_ggplot(ggplot_1)
+    # 5)
+    gt_4 <- aggregate(ggplot2::diamonds, price ~ cut, "mean") |>
+      gt::gt() |>
+      gt::cols_label(price = "average price") |>
+      gt::tab_style(
+        style = list(gt::cell_fill(color = "salmon")),
+        locations = gt::cells_body(rows = 2:3)
+      )
+    record_gt(gt_4)
+
+    playback_file <- file.path(tempdir(),"camcorder_tests_gt_ggplot.gif")
+
+    gg_playback(
+      name = playback_file,
+      first_image_duration = 1,
+      last_image_duration = 3,
+      frame_duration = 1
+    )
+
+    expect_true(file.exists(playback_file))
+
+    skip_on_ci()
+
+    expect_snapshot_file(
+      path = file.path(tempdir(),"camcorder_tests_gt_ggplot.gif")
+    )
+
+  })
+})
