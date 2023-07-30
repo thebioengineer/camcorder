@@ -1,3 +1,5 @@
+skip_if_not_installed("webshot2")
+
 test_that("recording a basic gt works", {
 
   withr::with_package("gt",code = {
