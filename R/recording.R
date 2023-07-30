@@ -102,6 +102,12 @@ record_gt <- function(x, ...) {
 
   rlang::check_installed("webshot2", reason = "to record gt tables")
 
+  table_dims <- dim(x[["_data"]])
+  if (GG_RECORDING_ENV$limitsize && (table_dims[1] > 100 || table_dims[2] > 30)) {
+    message("Table dimensions exceed 100x30.")
+    stop("If you're sure you want to record a table that big, use `limitsize = FALSE`")
+  }
+
   plot_files <-
     file.path(GG_RECORDING_ENV$recording_dir, paste0(
       format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
