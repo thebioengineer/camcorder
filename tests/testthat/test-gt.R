@@ -8,13 +8,7 @@ test_that("recording a basic gt works", {
       unlink(rec_dir,recursive = TRUE)
     }
 
-    gg_record(
-      dir = rec_dir,
-      device = "png",
-      width = 600,
-      height = 800,
-      units = "px"
-    )
+    gg_record(dir = rec_dir)
     on.exit(gg_stop_recording())
 
     exibble_gt <- gt::gt(exibble)

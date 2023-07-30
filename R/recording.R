@@ -109,6 +109,9 @@ record_gt <- function(x, ...) {
 
   # Convert to pixel for webshot()
   as_pixel <- function(x) {
+    if (is.na(x)) {
+      return(NULL)
+    }
     ratio <- switch(
       GG_RECORDING_ENV$image_units,
       "cm" = 1/2.54,
@@ -131,8 +134,8 @@ record_gt <- function(x, ...) {
     webshot2::webshot(
       url = plot_files[1],
       file = plot_files[2],
-      vwidth = as_pixel(GG_RECORDING_ENV$image_width),
-      vheight = as_pixel(GG_RECORDING_ENV$image_height),
+      vwidth = as_pixel(GG_RECORDING_ENV$image_width) %||% formals(webshot2::webshot)$vwidth,
+      vheight = as_pixel(GG_RECORDING_ENV$image_height) %||% formals(webshot2::webshot)$vheight,
       zoom = GG_RECORDING_ENV$scale
     )
   })
