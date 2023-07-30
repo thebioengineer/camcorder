@@ -72,6 +72,15 @@ detach_camcorder_shims <- function(){
     )
   }
 
+  if("package:gt" %in% search()){
+    registerS3method(
+      genname = "print",
+      class = "gt_tbl",
+      method = "print.gt_tbl",
+      envir = getNamespace("gt")
+    )
+  }
+
   GG_RECORDING_ENV$shims_registered <- FALSE
 
 }
