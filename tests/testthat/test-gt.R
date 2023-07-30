@@ -38,6 +38,35 @@ test_that("recording a basic gt works", {
   })
 })
 
+test_that("recording a gt with webshot options works", {
+
+  withr::with_package("gt",code = {
+
+    rec_dir <- file.path(tempdir(),"camcorder_tests_gt")
+
+    if(dir.exists(rec_dir)){
+      unlink(rec_dir,recursive = TRUE)
+    }
+
+    gg_record(dir = rec_dir, expand = 20, zoom = .5)
+    on.exit(gg_stop_recording())
+
+    exibble_gt <- gt::gt(exibble)
+    record_gt(exibble_gt)
+
+    skip_on_ci()
+
+    file.rename(
+      list.files(rec_dir,full.names = TRUE,pattern = "\\.png$"),
+      file.path(tempdir(),"camcorder_preview_gt_resize.png")
+    )
+    expect_snapshot_file(
+      path = file.path(tempdir(),"camcorder_preview_gt_resize.png")
+    )
+
+  })
+})
+
 test_that("recording gt works - gif output", {
 
   skip_on_ci()
