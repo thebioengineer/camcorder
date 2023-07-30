@@ -206,7 +206,7 @@ gg_playback <-
 #'
 #' @return Returns the last plot generated, resized to new dimensions
 #'
-gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA){
+gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA, scale = NA){
 
   if(!is.na(height)){
     GG_RECORDING_ENV$image_height <- height
@@ -220,6 +220,9 @@ gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA){
   }
   if(!is.na(dpi)){
     GG_RECORDING_ENV$image_dpi <- dpi
+  }
+  if(!is.na(scale)){
+    GG_RECORDING_ENV$scale <- scale
   }
 
   print(GG_RECORDING_ENV$last_plot)
