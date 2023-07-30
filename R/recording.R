@@ -100,6 +100,8 @@ record_patchwork <- function(x,...) {
 #'
 record_gt <- function(x, ...) {
 
+  rlang::check_installed("webshot2", reason = "to record gt tables")
+
   plot_files <-
     file.path(GG_RECORDING_ENV$recording_dir, paste0(
       format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),

@@ -36,15 +36,13 @@ RoxygenNote: 7.2.1
 Imports: 
     ggplot2,
     gifski,
-    gt,
     tools,
     magick,
     rsvg,
     jsonlite,
     rlang,
     grDevices,
-    svglite,
-    webshot2
+    svglite
 Suggests: 
     knitr,
     rmarkdown,
@@ -58,6 +56,8 @@ Suggests:
     dplyr,
     systemfonts,
     scales,
-    extrafont
+    extrafont,
+    gt,
+    webshot2
 VignetteBuilder: knitr
 Config/testthat/edition: 3
