@@ -104,8 +104,10 @@ record_gt <- function(x, ...) {
 
   table_dims <- dim(x[["_data"]])
   if (GG_RECORDING_ENV$limitsize && (table_dims[1] > 100 || table_dims[2] > 30)) {
-    message("Table dimensions exceed 100x30.")
-    stop("If you're sure you want to record a table that big, use `limitsize = FALSE`")
+    rlang::abort(c(
+      "Table dimensions exceed 100x30",
+      i = "Render a subset with `gt_preview()` or use `limitsize = FALSE`"
+    ))
   }
 
   plot_files <-
