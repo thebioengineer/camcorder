@@ -155,6 +155,16 @@ test_that("recording gt and ggplot together works - gif output", {
     gg_record(dir = rec_dir)
     on.exit(gg_stop_recording())
 
+    # safety check for rendering large tables
+    gt_big <- gt::gt(ggplot2::diamonds)
+    expect_error(
+      expect_message(
+        record_gt(gt_big),
+        "Table dimensions exceed"
+      ),
+      "use `limitsize = FALSE`"
+    )
+
     # 1)
     gt_1 <- gt::gt(ggplot2::diamonds) |>
       gt_preview()
