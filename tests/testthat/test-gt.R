@@ -65,16 +65,17 @@ test_that("recording gt works - gif output", {
     )
     on.exit(gg_stop_recording())
 
-    # gt 1
+    # Examples from: https://gt.rstudio.com/articles/creating-summary-lines.html
+    # 1)
     exibble_gt <- gt::gt(exibble)
     record_gt(exibble_gt)
-    # gt 2
+    # 2)
     exibble_a <-
       exibble[, c("num", "char", "currency", "row", "group")] |>
       gt::gt(rowname_col = "row", groupname_col = "group") |>
       gt::sub_missing()
     record_gt(exibble_a)
-    # gt 3
+    # 3)
     gg_resize_film(width = 400)
     exibble_b <-
       exibble_a |>
