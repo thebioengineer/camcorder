@@ -69,6 +69,8 @@ test_that("recording a gt with webshot options works", {
 
 test_that("recording gt works - gif output", {
 
+  skip_on_cran()
+
   skip_on_ci()
 
   withr::with_package("gt",code = {
@@ -129,8 +131,6 @@ test_that("recording gt works - gif output", {
 
     expect_true(file.exists(playback_file))
 
-    skip_on_ci()
-
     expect_snapshot_file(
       path = file.path(tempdir(),"camcorder_playback_gt.gif")
     )
@@ -139,6 +139,8 @@ test_that("recording gt works - gif output", {
 })
 
 test_that("recording gt and ggplot together works - gif output", {
+
+  skip_on_cran()
 
   skip_on_ci()
 
@@ -196,8 +198,6 @@ test_that("recording gt and ggplot together works - gif output", {
     )
 
     expect_true(file.exists(playback_file))
-
-    skip_on_ci()
 
     expect_snapshot_file(
       path = file.path(tempdir(),"camcorder_tests_gt_ggplot.gif")
