@@ -84,7 +84,8 @@ test_that("recording gt works - gif output", {
       device = "png",
       width = 600,
       height = 800,
-      units = "px"
+      units = "px",
+      zoom = 1
     )
     on.exit(gg_stop_recording())
 
@@ -93,13 +94,14 @@ test_that("recording gt works - gif output", {
     exibble_gt <- gt::gt(exibble)
     record_gt(exibble_gt)
     # 2)
+    gg_resize_film(width = 800)
+    # 3)
     exibble_a <-
       exibble[, c("num", "char", "currency", "row", "group")] |>
       gt::gt(rowname_col = "row", groupname_col = "group") |>
       gt::sub_missing()
     record_gt(exibble_a)
-    # 3)
-    gg_resize_film(width = 400)
+    # 4)
     exibble_b <-
       exibble_a |>
       summary_rows(
@@ -112,14 +114,16 @@ test_that("recording gt works - gif output", {
         )
       )
     record_gt(exibble_b)
+    # 5)
+    gg_resize_film(expand = 20, zoom = 2)
 
     playback_file <- file.path(tempdir(),"camcorder_playback_gt.gif")
 
     gg_playback(
       name = playback_file,
-      first_image_duration = .5,
+      first_image_duration = 1,
       last_image_duration = 3,
-      frame_duration = .5,
+      frame_duration = 1,
       image_resize = 800
     )
 
