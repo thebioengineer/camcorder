@@ -1,8 +1,8 @@
 #' @title Record and generate plot histories
 #'
 #' @description Record plots created over time and generate a GIF of the plots
-#'    made in the 'R' session. Overrides the print methods for ggplot and patchwork objects
-#'    from the 'ggplot2' and 'patchwork' packages respectively.
+#'    made in the 'R' session. Overrides the print methods for ggplot, patchwork, and gt_tbl objects
+#'    from the 'ggplot2', 'patchwork', and 'gt' packages respectively.
 #'
 #' @rdname Recording
 #'
@@ -12,6 +12,7 @@
 #' @param device_ext file extension to use for images created. Does not usually need to be populated manually.
 #' @return Used initialize recording, nothing returned
 #' @inheritParams ggplot2::ggsave
+#' @inheritParams webshot2::webshot
 #'
 #' @importFrom ggplot2 ggsave
 #'
@@ -40,7 +41,9 @@ gg_record <- function(dir = NULL,
                       dpi = 300,
                       limitsize = TRUE,
                       device_ext = NULL,
-                      bg = NULL
+                      bg = NULL,
+                      expand = 5,
+                      zoom = 2
 ){
 
   if (is.null(dir)) {
@@ -91,6 +94,9 @@ gg_record <- function(dir = NULL,
   GG_RECORDING_ENV$scale        <- scale
   GG_RECORDING_ENV$bg           <- bg
   GG_RECORDING_ENV$limitsize    <- limitsize
+
+  GG_RECORDING_ENV$expand       <- expand
+  GG_RECORDING_ENV$zoom         <- zoom
 
   GG_RECORDING_ENV$shims_registered <- FALSE
 

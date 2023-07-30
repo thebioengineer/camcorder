@@ -17,7 +17,9 @@ gg_record(
   dpi = 300,
   limitsize = TRUE,
   device_ext = NULL,
-  bg = NULL
+  bg = NULL,
+  expand = 5,
+  zoom = 2
 )
 
 gg_playback(
@@ -37,7 +39,7 @@ gg_playback(
   ...
 )
 
-gg_resize_film(height = NA, width = NA, units = NA, dpi = NA)
+gg_resize_film(height = NA, width = NA, units = NA, dpi = NA, scale = NA)
 
 gg_stop_recording()
 }
@@ -63,6 +65,23 @@ specifying dimensions in pixels.}
 
 \item{bg}{Background colour. If \code{NULL}, uses the \code{plot.background} fill value
 from the plot theme.}
+
+\item{expand}{A numeric vector specifying how many pixels to expand the
+clipping rectangle by. If one number, the rectangle will be expanded by
+that many pixels on all sides. If four numbers, they specify the top,
+right, bottom, and left, in that order. When taking screenshots of multiple
+URLs, this parameter can also be a list with same length as \code{url} with
+each element of the list containing a single number or four numbers to use
+for the corresponding URL.}
+
+\item{zoom}{A number specifying the zoom factor. A zoom factor of 2 will
+result in twice as many pixels vertically and horizontally. Note that using
+2 is not exactly the same as taking a screenshot on a HiDPI (Retina)
+device: it is like increasing the zoom to 200% in a desktop browser and
+doubling the height and width of the browser window. This differs from
+using a HiDPI device because some web pages load different,
+higher-resolution images when they know they will be displayed on a HiDPI
+device (but using zoom will not report that there is a HiDPI device).}
 
 \item{name}{name of gif.}
 
@@ -104,8 +123,8 @@ Returns nothing. used for side effect.
 }
 \description{
 Record plots created over time and generate a GIF of the plots
-   made in the 'R' session. Overrides the print methods for ggplot and patchwork objects
-   from the 'ggplot2' and 'patchwork' packages respectively.
+   made in the 'R' session. Overrides the print methods for ggplot, patchwork, and gt_tbl objects
+   from the 'ggplot2', 'patchwork', and 'gt' packages respectively.
 
 resize the film for recording, reprints and saves last plot
 

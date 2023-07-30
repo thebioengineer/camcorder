@@ -136,7 +136,9 @@ record_gt <- function(x, ...) {
       file = plot_files[2],
       vwidth = as_pixel(GG_RECORDING_ENV$image_width) %||% formals(webshot2::webshot)$vwidth,
       vheight = as_pixel(GG_RECORDING_ENV$image_height) %||% formals(webshot2::webshot)$vheight,
-      zoom = GG_RECORDING_ENV$scale
+      selector = "table",
+      expand = GG_RECORDING_ENV$expand,
+      zoom = GG_RECORDING_ENV$zoom
     )
   })
 
