@@ -39,7 +39,16 @@ gg_playback(
   ...
 )
 
-gg_resize_film(height = NA, width = NA, units = NA, dpi = NA, scale = NA)
+gg_resize_film(
+  height = NA,
+  width = NA,
+  units = NA,
+  dpi = NA,
+  scale = NA,
+  limitsize = NA,
+  expand = NA,
+  zoom = NA
+)
 
 gg_stop_recording()
 }

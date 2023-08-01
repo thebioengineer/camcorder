@@ -208,6 +208,7 @@ gg_playback <-
 #' @description resize the film for recording, reprints and saves last plot
 #'
 #' @inheritParams ggplot2::ggsave
+#' @inheritParams webshot2::webshot
 #' @export
 #'
 #' @return Returns the last plot generated, resized to new dimensions
@@ -235,7 +236,7 @@ gg_resize_film <- function(height = NA, width = NA, units = NA, dpi = NA,
     GG_RECORDING_ENV$limitsize <- limitsize
   }
 
-  if(!is.na(expand)){
+  if(!all(is.na(expand))){
     GG_RECORDING_ENV$expand <- expand
   }
   if(!is.na(zoom)){
