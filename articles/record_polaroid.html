@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Capture plots from other devices with record_polaroid()">
 <meta property="og:description" content="camcorder">
@@ -84,22 +84,22 @@
       <img src="../logo.png" class="logo" alt=""><h1>Capture plots from other devices with record_polaroid()</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/thebioengineer/camcorder/blob/HEAD/vignettes/record_polaroid.Rmd" class="external-link"><code>vignettes/record_polaroid.Rmd</code></a></small>
       <div class="d-none name"><code>record_polaroid.Rmd</code></div>
     </div>
 
     
     
-<p><code>{camcorder}</code> overrides functions like
+<p><a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a> overrides functions like
 <code>print.ggplot</code> or <code>print.patchwork</code> to capture
 plots. In some cases though, when other functions are used to print
-plots, <code>{camcorder}</code> cannot automatically grab them.
+plots, <a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a> cannot automatically grab them.
 <code><a href="../reference/record_polaroid.html">record_polaroid()</a></code> provides a way to expand the capturing
-capabilities of <code>{camcorder}</code> to other devices.</p>
+capabilities of <a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a> to other devices.</p>
 <p>This can be achieved by adding <code><a href="../reference/record_polaroid.html">record_polaroid()</a></code> after
 the code used for plotting. Although <code><a href="../reference/record_polaroid.html">record_polaroid()</a></code> has
 to be called manually, it allows saving a plot with the settings of an
-existing <code>{camcorder}</code> setup, like width, height, or
+existing <a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a> setup, like width, height, or
 directory.</p>
 <p>This is particularly useful when you have an ongoing recording of
 ggplot2 code and then start using a package that has its own printing
@@ -109,11 +109,11 @@ function, like <a href="https://github.com/hafen/geofacet" class="external-link"
 </h2>
 <p>In this example, we only use the <code>state_ranks</code> dataset
 from <a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a> but no functions from the package. Our
-basic <code>{camcorder}</code> setup works as expected.</p>
+basic <a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a> setup works as expected.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">camcorder</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/Recording.html">gg_record</a></span><span class="op">(</span>device <span class="op">=</span> <span class="st">"png"</span>, width <span class="op">=</span> <span class="fl">8</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
@@ -127,12 +127,12 @@ basic <code>{camcorder}</code> setup works as expected.</p>
 <code>facet_geo()</code> though, no plot would be saved, since
 <a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a> uses its own printing function. This is where
 <code><a href="../reference/record_polaroid.html">record_polaroid()</a></code> comes in. By adding it (no arguments
-needed), <code>{camcorder}</code> saves the plot in the same directory
+needed), <a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a> saves the plot in the same directory
 and with the same dimensions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hafen/geofacet" class="external-link">geofacet</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">camcorder</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/Recording.html">gg_record</a></span><span class="op">(</span></span>
 <span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"recording"</span><span class="op">)</span>,</span>
@@ -158,7 +158,7 @@ Not only does it saves the plot but it also displays the image in
 RStudio’s Viewer pane with the desired dimensions declared in
 <code><a href="../reference/Recording.html">gg_record()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">camcorder</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://thebioengineer.github.io/camcorder/" class="external-link">camcorder</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/Recording.html">gg_record</a></span><span class="op">(</span></span>
 <span>  dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"recording"</span><span class="op">)</span>,</span>
