@@ -89,6 +89,75 @@ record_patchwork <- function(x,...) {
 
 }
 
+#' Record gt tables
+#'
+#' @description Record gt tables as png using webshot2.
+#'
+#' @param x gt table to save
+#' @param ... allow for traditionally pass arguments to printing that are ignored
+#'
+#' @noRd
+#'
+record_gt <- function(x, ...) {
+
+  rlang::check_installed("webshot2", reason = "to record gt tables")
+
+  table_dims <- dim(x[["_data"]])
+  if (GG_RECORDING_ENV$limitsize && (table_dims[1] > 100 || table_dims[2] > 30)) {
+    rlang::abort(c(
+      "Table dimensions exceed 100x30",
+      i = "Render a subset with `gt_preview()` or use `limitsize = FALSE`"
+    ))
+  }
+
+  plot_files <-
+    file.path(GG_RECORDING_ENV$recording_dir, paste0(
+      format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
+      ".",
+      c("html", "png") # webshot() only supports png for raster
+    ))
+
+  # Convert to pixel for webshot()
+  as_pixel <- function(x) {
+    if (is.na(x)) {
+      return(NULL)
+    }
+    ratio <- switch(
+      GG_RECORDING_ENV$image_units,
+      "cm" = 1/2.54,
+      "mm" = 1/25.4,
+      "px" = 1,
+      "in" = 1
+    )
+    dpi_scaling <- if (GG_RECORDING_ENV$image_units == "px") {
+      1
+    } else {
+      GG_RECORDING_ENV$image_dpi
+    }
+    round(x * ratio * dpi_scaling)
+  }
+
+  suppressMessages({
+    gt::gtsave(data = x, filename = plot_files[1])
+    # Doesn't suppress webshot() messages
+    # - known issue: https://github.com/rstudio/webshot2/issues/24
+    webshot2::webshot(
+      url = plot_files[1],
+      file = plot_files[2],
+      vwidth = as_pixel(GG_RECORDING_ENV$image_width) %||% formals(webshot2::webshot)$vwidth,
+      vheight = as_pixel(GG_RECORDING_ENV$image_height) %||% formals(webshot2::webshot)$vheight,
+      selector = "table",
+      expand = GG_RECORDING_ENV$expand,
+      zoom = GG_RECORDING_ENV$zoom
+    )
+  })
+
+  preview_film()
+
+  GG_RECORDING_ENV$last_plot <- x
+
+}
+
 #' Record Plots - generic
 #'
 #' @description For plot types that don't have a special print method, use this
