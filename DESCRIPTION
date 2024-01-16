@@ -58,6 +58,8 @@ Suggests:
     dplyr,
     systemfonts,
     scales,
-    extrafont
+    extrafont,
+    htmltools,
+    slickR
 VignetteBuilder: knitr
 Config/testthat/edition: 3
