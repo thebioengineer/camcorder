@@ -36,7 +36,7 @@ RoxygenNote: 7.2.1
 URL: https://thebioengineer.github.io/camcorder/, https://github.com/thebioengineer/camcorder
 BugReports: https://github.com/thebioengineer/camcorder/issues
 Imports:
-    ggplot2 (>= 4.0.0),
+    ggplot2,
     S7 (>= 0.1.0),
     gifski,
     tools,
