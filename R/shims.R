@@ -129,7 +129,7 @@ detach_camcorder_shims <- function(){
   if ("package:patchwork" %in% search()) {
     tryCatch({
       # Try S7 method restoration
-      if (requireNamespace("S7", quietly = TRUE)) {
+      if (packageVersion("ggplot2") >= "4.0.0") {
         patchwork_class <- get("patchwork", envir = getNamespace("patchwork"))
         original_print <- get("print.patchwork", envir = getNamespace("patchwork"))
         S7::method(print, patchwork_class) <- original_print
