@@ -101,7 +101,7 @@ detach_camcorder_shims <- function(){
   if ("package:ggplot2" %in% search()) {
     tryCatch({
       # Try S7 method restoration first
-      if (requireNamespace("S7", quietly = TRUE)) {
+      if (packageVersion("ggplot2") >= "4.0.0") {
         ggplot_class <- get("ggplot", envir = getNamespace("ggplot2"))
         original_print <- get("print. ggplot", envir = getNamespace("ggplot2"))
         S7::method(print, ggplot_class) <- original_print
