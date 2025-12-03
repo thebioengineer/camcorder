@@ -56,7 +56,7 @@ register_camcorder_shims <- function(){
   if ("package:patchwork" %in% search()) {
     tryCatch({
       # patchwork may also use S7 in newer versions
-      if (requireNamespace("S7", quietly = TRUE)) {
+      if (packageVersion("ggplot2") >="4.0.0") {
         patchwork_class <- get("patchwork", envir = getNamespace("patchwork"))
         S7::method(print, patchwork_class) <- record_patchwork
       } else {
