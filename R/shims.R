@@ -26,7 +26,7 @@ register_camcorder_shims <- function(){
   if ("package:ggplot2" %in% search()) {
     tryCatch({
       # Try S7 method registration first (ggplot2 >= 4.0.0)
-      if (requireNamespace("S7", quietly = TRUE)) {
+      if (packageVersion("ggplot2") >= "4.0.0") {
         # Get the ggplot class from ggplot2
         ggplot_class <- get("ggplot", envir = getNamespace("ggplot2"))
         
