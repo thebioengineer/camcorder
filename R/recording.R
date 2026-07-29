@@ -12,6 +12,30 @@
 #'
 record_ggplot <- function(x, ...) {
 
+  ## ggsave() draws the plot via grid.draw(), whose ggplot method calls
+  ## print(). With ggplot2 < 4.0.0 that inner print() resolved to ggplot2's
+  ## own print.ggplot inside its namespace, but with S7 (>= 4.0.0) it
+  ## dispatches back into this shim and recurses. Restore ggplot2's print
+  ## method while saving, mirroring what record_patchwork does.
+  if(ggplot2_is_s7() && !is.null(GG_RECORDING_ENV$ggplot2_print)){
+
+    registerS3method(
+      genname = "print",
+      class = "ggplot2::ggplot",
+      method = GG_RECORDING_ENV$ggplot2_print,
+      envir = getNamespace("ggplot2")
+    )
+
+    on.exit({
+      registerS3method(
+        genname = "print",
+        class = "ggplot2::ggplot",
+        method = record_ggplot,
+        envir = getNamespace("camcorder")
+      )
+    })
+  }
+
   plot_file <-
     file.path(GG_RECORDING_ENV$recording_dir, paste0(
       format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
