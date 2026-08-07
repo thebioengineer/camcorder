@@ -43,6 +43,7 @@ Imports:
     rsvg,
     jsonlite,
     rlang,
+    glue,
     grDevices,
     svglite
 Suggests: 

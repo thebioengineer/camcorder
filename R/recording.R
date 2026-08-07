@@ -7,17 +7,13 @@
 #' @param ... allow for traditionally pass arguments to printing that are ignored
 #'
 #' @importFrom ggplot2 set_last_plot
+#' @importFrom glue glue
 #'
 #' @noRd
 #'
 record_ggplot <- function(x, ...) {
 
-  plot_file <-
-    file.path(GG_RECORDING_ENV$recording_dir, paste0(
-      format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
-      ".",
-      GG_RECORDING_ENV$device_ext
-    ))
+  plot_file <- camcorder_plot_file_path()
 
   suppressMessages({
     ggsave(
@@ -44,12 +40,7 @@ record_ggplot <- function(x, ...) {
 #' @importFrom utils capture.output
 record_patchwork <- function(x,...) {
 
-    plot_file <-
-      file.path(GG_RECORDING_ENV$recording_dir, paste0(
-        format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
-        ".",
-        GG_RECORDING_ENV$device_ext
-      ))
+  plot_file <- camcorder_plot_file_path()
 
     registerS3method(
       genname = "print",
@@ -118,12 +109,7 @@ record_patchwork <- function(x,...) {
 #' @export
 record_polaroid <- function(){
 
-  plot_file <-
-    file.path(GG_RECORDING_ENV$recording_dir, paste0(
-      format(Sys.time(), "%Y_%m_%d_%H_%M_%OS6"),
-      ".",
-      GG_RECORDING_ENV$device_ext
-    ))
+  plot_file <- camcorder_plot_file_path()
 
   suppressMessages({
 

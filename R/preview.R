@@ -13,6 +13,8 @@ preview_film <- function(){
             wait = FALSE)
 
   } else{
+
+
     image_viewer_html <-
       file.path(tempdir(), "preview.html")
 
@@ -37,11 +39,12 @@ get_file_records <- function(full_path = FALSE){
 
   file_preview_ext <- paste0("[.]", GG_RECORDING_ENV$device_ext, "$")
 
-  file_preview_format <- "\\d{4}_\\d{2}_\\d{2}_\\d{2}_\\d{2}_\\d{2}[.]\\d+"
+  filename_pattern <- GG_RECORDING_ENV$filename_pattern
+  filename_pattern <- cleanup_filename_pattern_to_regex(filename_pattern)
 
   list.files(
     path    = GG_RECORDING_ENV$recording_dir,
-    pattern = paste0("^",file_preview_format,file_preview_ext),
+    pattern = paste0("^",filename_pattern,file_preview_ext),
     full.names = full_path
   )
 

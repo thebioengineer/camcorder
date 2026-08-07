@@ -17,7 +17,8 @@ gg_record(
   dpi = 300,
   limitsize = TRUE,
   device_ext = NULL,
-  bg = NULL
+  bg = NULL,
+  filename_pattern = "{timestamp}"
 )
 
 gg_playback(
@@ -63,6 +64,9 @@ specifying dimensions in pixels.}
 
 \item{bg}{Background colour. If \code{NULL}, uses the \code{plot.background} fill value
 from the plot theme.}
+
+\item{filename_pattern}{Pattern to use when naming the interim files. Must use one of the
+reserved camcorder iterators: {timestamp},{i}}
 
 \item{name}{name of gif.}
 
