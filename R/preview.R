@@ -33,14 +33,18 @@ preview_film <- function(){
 
 #' get list of recorded files in recording dir
 #' @noRd
-get_file_records <- function(full_path = FALSE){
+get_file_records <-
+  function(full_path = FALSE,
+           path = GG_RECORDING_ENV$recording_dir,
+           ext = GG_RECORDING_ENV$device_ext) {
 
-  file_preview_ext <- paste0("[.]", GG_RECORDING_ENV$device_ext, "$")
+
+  file_preview_ext <- paste0("[.]",ext , "$")
 
   file_preview_format <- "\\d{4}_\\d{2}_\\d{2}_\\d{2}_\\d{2}_\\d{2}[.]\\d+"
 
   list.files(
-    path    = GG_RECORDING_ENV$recording_dir,
+    path    = path,
     pattern = paste0("^",file_preview_format,file_preview_ext),
     full.names = full_path
   )
@@ -55,19 +59,7 @@ get_file_records <- function(full_path = FALSE){
 #'
 film_cyclotron <- function(IMAGE,filename = tempfile(fileext = ".html")){
 
-  image_path <- file.path(GG_RECORDING_ENV$recording_dir, IMAGE)
-  image_ext <- file_ext(IMAGE)
-
-  if(tolower(image_ext) %in% c("tiff","emf","eps","ps")){
-    temp_image <- tempfile(fileext = ".png")
-    image <- magick::image_read(image_path)
-    converted_image <- magick::image_convert(image,format = "png")
-    magick::image_write(converted_image, path = temp_image)
-    image_path <- temp_image
-    image_ext <- "png"
-  }
-
-  b64 <-  paste0("data:image/",image_ext,";base64," , base64_enc(readBin(image_path, "raw", file.info(image_path)[1, "size"])))
+  b64 <- read_image_b64(file.path(GG_RECORDING_ENV$recording_dir, IMAGE))
 
   viewer_html <- c(
     "<div style='height:100%;width:100%;'>",
@@ -301,4 +293,20 @@ film_cyclotron <- function(IMAGE,filename = tempfile(fileext = ".html")){
   cat(html_page,
       sep = "\n",
       file = filename)
+}
+
+read_image_b64 <- function(path){
+
+  image_ext <- file_ext(path)
+
+  if(tolower(image_ext) %in% c("tiff","emf","eps","ps")){
+    temp_image <- tempfile(fileext = ".png")
+    image <- magick::image_read(path)
+    converted_image <- magick::image_convert(image,format = "png")
+    magick::image_write(converted_image, path = temp_image)
+    path <- temp_image
+    image_ext <- "png"
+  }
+
+  paste0("data:image/",image_ext,";base64," , base64_enc(readBin(path, "raw", file.info(path)[1, "size"])))
 }
