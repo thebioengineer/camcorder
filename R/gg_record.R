@@ -10,8 +10,12 @@
 #' @param device Device to use. Can either be a device function (e.g. png()), or
 #'     one of "png", "pdf", "jpeg", "bmp", "tiff", "emf", "svg", "eps", "ps".
 #' @param device_ext file extension to use for images created. Does not usually need to be populated manually.
-#' @return Used initialize recording, nothing returned
+#' @param filename_pattern Pattern to use when naming the interim files. Must use one of the
+#'     reserved camcorder iterators: {timestamp},{i}
 #' @inheritParams ggplot2::ggsave
+#'
+#'
+#' @return Used initialize recording, nothing returned
 #'
 #' @importFrom ggplot2 ggsave
 #'
@@ -40,7 +44,8 @@ gg_record <- function(dir = NULL,
                       dpi = 300,
                       limitsize = TRUE,
                       device_ext = NULL,
-                      bg = NULL
+                      bg = NULL,
+                      filename_pattern = "{timestamp}"
 ){
 
   if (is.null(dir)) {
@@ -67,22 +72,35 @@ gg_record <- function(dir = NULL,
     device_ext <- derive_ext(device)
   }
 
+  filename_pattern <- verify_filename_pattern(filename_pattern)
+
   units <- match.arg(units)
 
   if (!dir.exists(dir)) {
     dir.create(dir, recursive = TRUE)
   } else{
-    if (length(list.files(dir, pattern = paste0("[.]", device_ext, "$"))) > 1) {
+    device_files <-
+      list.files(dir,
+                 pattern = paste0(
+                   "^",
+                   cleanup_filename_pattern_to_regex(filename_pattern),
+                   "[.]",
+                   device_ext,
+                   "$"
+                 ))
+    if (length(device_files) > 1) {
       warning(
         "Writing to a folder that already exists. gg_playback may use more files than intended!"
       )
     }
   }
 
-  GG_RECORDING_ENV$recording_dir <- dir
-  GG_RECORDING_ENV$device        <- device
-  GG_RECORDING_ENV$device_ext    <- device_ext
-  GG_RECORDING_ENV$is_temp_dir   <- is_temp_dir
+
+  GG_RECORDING_ENV$recording_dir     <- dir
+  GG_RECORDING_ENV$device            <- device
+  GG_RECORDING_ENV$device_ext        <- device_ext
+  GG_RECORDING_ENV$is_temp_dir       <- is_temp_dir
+  GG_RECORDING_ENV$filename_pattern  <- filename_pattern
 
   GG_RECORDING_ENV$image_width  <- width
   GG_RECORDING_ENV$image_height <- height
