@@ -31,5 +31,4 @@ grid.draw(textGrob("Hello world"))
 record_polaroid()
 
 gg_stop_recording()
-#> Warning: S3 method ‘print.ggplot’ was declared but not found
 ```
