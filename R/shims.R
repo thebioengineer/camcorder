@@ -17,12 +17,31 @@ register_camcorder_shims <- function(){
   declare_lib_shims()
 
   if("package:ggplot2" %in% search()){
-    registerS3method(
-      genname = "print",
-      class = "ggplot",
-      method = "record_ggplot",
-      envir = getNamespace("camcorder")
-    )
+
+    if(ggplot2_is_s7()){
+      ## ggplot2 >= 4.0.0 plot objects are S7, with class vector
+      ## c("ggplot2::ggplot", "ggplot", ...). S3 dispatch finds ggplot2's
+      ## method for "ggplot2::ggplot" before any method for "ggplot", so the
+      ## shim must be registered on the qualified class name. Keep a copy of
+      ## ggplot2's own method so it can be restored on detach.
+      if(is.null(GG_RECORDING_ENV$ggplot2_print)){
+        GG_RECORDING_ENV$ggplot2_print <-
+          utils::getS3method("print", "ggplot2::ggplot")
+      }
+      registerS3method(
+        genname = "print",
+        class = "ggplot2::ggplot",
+        method = record_ggplot,
+        envir = getNamespace("camcorder")
+      )
+    }else{
+      registerS3method(
+        genname = "print",
+        class = "ggplot",
+        method = "record_ggplot",
+        envir = getNamespace("camcorder")
+      )
+    }
   }
 
   if("package:patchwork" %in% search()){
@@ -46,12 +65,25 @@ detach_camcorder_shims <- function(){
   }
 
   if("package:ggplot2" %in% search()){
-    registerS3method(
-      genname = "print",
-      class = "ggplot",
-      method = "print.ggplot",
-      envir = getNamespace("ggplot2")
-    )
+    if(ggplot2_is_s7()){
+      ## print.ggplot no longer exists in the ggplot2 namespace in
+      ## ggplot2 >= 4.0.0; restore the method object captured at registration
+      if(!is.null(GG_RECORDING_ENV$ggplot2_print)){
+        registerS3method(
+          genname = "print",
+          class = "ggplot2::ggplot",
+          method = GG_RECORDING_ENV$ggplot2_print,
+          envir = getNamespace("ggplot2")
+        )
+      }
+    }else{
+      registerS3method(
+        genname = "print",
+        class = "ggplot",
+        method = "print.ggplot",
+        envir = getNamespace("ggplot2")
+      )
+    }
   }
 
   if("package:patchwork" %in% search()){
@@ -106,6 +138,12 @@ camcorder_warn_suppress <- function(package, warn.conflicts = FALSE){
 
   return(warn.conflicts)
 
+}
+
+## ggplot2 4.0.0 rewrote its object system from S3 to S7,
+## changing the class that print dispatches on
+ggplot2_is_s7 <- function(){
+  utils::packageVersion("ggplot2") >= "4.0.0"
 }
 
 
